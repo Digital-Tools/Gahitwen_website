@@ -75,7 +75,7 @@ const Privacy = () => {
                 131 Continental Dr Ste 305<br />
                 Newark, DE 19713, USA<br />
                 Email: privacy@gahitwen.com<br />
-                Phone: +1 (555) 123-4567
+                Phone: +1 (302) 607-5297
               </p>
             </div>
           </motion.div>

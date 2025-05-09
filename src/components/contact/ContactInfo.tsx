@@ -27,7 +27,7 @@ const ContactInfo = () => {
           <div className="ml-4">
             <h4 className="text-base font-medium text-brown-900">Phone</h4>
             <p className="mt-1 text-gray-600">
-              <a href="tel:+1-555-123-4567" className="hover:text-brown-800">+1 (555) 123-4567</a>
+              <a href="tel:+1-302-607-5297" className="hover:text-brown-800">+1 (302) 607-5297</a>
             </p>
           </div>
         </div>
