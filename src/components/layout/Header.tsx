@@ -86,13 +86,13 @@ const Header = () => {
           >
             Services
           </NavLink>
-          <NavLink 
-            to="/team" 
-            className="text-brown-800 hover:text-brown-900 font-medium text-lg" 
-            onClick={closeMenu}
-          >
-            Team
-          </NavLink>
+          {/*<NavLink */}
+          {/*  to="/team" */}
+          {/*  className="text-brown-800 hover:text-brown-900 font-medium text-lg" */}
+          {/*  onClick={closeMenu}*/}
+          {/*>*/}
+          {/*  Team*/}
+          {/*</NavLink>*/}
           <NavLink 
             to="/contact" 
             className="text-brown-800 hover:text-brown-900 font-medium text-lg" 
