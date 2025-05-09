@@ -5,8 +5,8 @@ const Terms = () => {
   return (
     <>
       <Helmet>
-        <title>Terms of Service | Gahitwen LLC</title>
-        <meta name="description" content="Gahitwen LLC's terms of service outline the rules, guidelines, and legal agreements between you and our company." />
+        <title>Terms of Service | The Gahitwen LLC</title>
+        <meta name="description" content="The Gahitwen LLC's terms of service outline the rules, guidelines, and legal agreements between you and our company." />
       </Helmet>
       
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
@@ -25,7 +25,7 @@ const Terms = () => {
               
               <h2 className="text-2xl font-bold text-brown-900 mb-4">Agreement to Terms</h2>
               <p>
-                These Terms of Service constitute a legally binding agreement made between you and Gahitwen LLC ("we," "us," or "our"), concerning your access to and use of our website and services. You agree that by accessing the website and/or services, you have read, understood, and agree to be bound by all of these Terms of Service.
+                These Terms of Service constitute a legally binding agreement made between you and The Gahitwen LLC ("we," "us," or "our"), concerning your access to and use of our website and services. You agree that by accessing the website and/or services, you have read, understood, and agree to be bound by all of these Terms of Service.
               </p>
               
               <h2 className="text-2xl font-bold text-brown-900 mb-4 mt-8">Intellectual Property Rights</h2>
@@ -81,10 +81,10 @@ const Terms = () => {
                 If you have questions or comments about these Terms of Service, please contact us at:
               </p>
               <p>
-                Gahitwen LLC<br />
+                The Gahitwen LLC<br />
                 131 Continental Dr Ste 305<br />
                 Newark, DE 19713, USA<br />
-                Email: legal@gahitwen.com<br />
+                Email: compliance@gahitwen.com<br />
                 Phone: +1 (555) 123-4567
               </p>
             </div>

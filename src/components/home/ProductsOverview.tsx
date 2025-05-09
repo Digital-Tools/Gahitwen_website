@@ -1,5 +1,10 @@
 import { motion } from 'framer-motion';
-import { Receipt, Trash2, Truck, LineChart } from 'lucide-react';
+import {
+  ScanBarcodeIcon,
+  Trash2Icon,
+  TruckIcon,
+  LocateFixedIcon
+} from 'lucide-react';
 import Card from '../ui/Card';
 import SectionHeading from '../ui/SectionHeading';
 import Button from '../ui/Button';
@@ -8,30 +13,30 @@ const products = [
   {
     id: 'risiti',
     name: 'Risiti',
-    description: 'Scan, organize & archive receipts—powered by Risiti AI.',
-    icon: Receipt,
-    color: 'bg-blue-500',
+    description: 'Scan, organize & archive receipts powered by Risiti AI.',
+    icon: ScanBarcodeIcon,
+    color: 'bg-purple-500',
   },
   {
     id: 'smart-taka',
     name: 'Smart-Taka',
-    description: 'Revolutionizing waste management—apps for aggregators & collectors.',
-    icon: Trash2,
+    description: 'Revolutionizing waste management apps for aggregators & collectors.',
+    icon: Trash2Icon,
     color: 'bg-green-500',
   },
   {
     id: 'gahitwen-logistics',
     name: 'Gahitwen Logistics',
     description: 'Connecting cargo owners and truckers of all sizes.',
-    icon: Truck,
+    icon: TruckIcon,
     color: 'bg-orange-500',
   },
   {
     id: 'gfleet',
     name: 'GFleet',
-    description: 'Web dashboard for fleet owners—monitor vehicles & integrate with Gahitwen.',
-    icon: LineChart,
-    color: 'bg-purple-500',
+    description: 'Web dashboard for fleet owners monitor vehicles & integrate with Gahitwen.',
+    icon: LocateFixedIcon,
+    color: 'bg-blue-500',
   }
 ];
 

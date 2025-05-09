@@ -7,7 +7,7 @@ const products = [
   {
     id: 'risiti',
     title: 'Risiti',
-    tagline: 'Scan, organize & archive receipts—powered by Risiti AI.',
+    tagline: 'Scan, organize & archive receipts powered by Risiti AI.',
     description: 'Risiti transforms how businesses and individuals handle receipts. Our powerful AI scanning technology accurately extracts and categorizes information from any receipt, creating a searchable digital archive that integrates with your accounting software.',
     features: [
       'Instant receipt scanning with AI-powered data extraction',
@@ -22,7 +22,7 @@ const products = [
   {
     id: 'smart-taka',
     title: 'Smart-Taka',
-    tagline: 'Revolutionizing waste management—apps for aggregators & collectors.',
+    tagline: 'Revolutionizing waste management apps for aggregators & collectors.',
     description: 'Smart-Taka is a comprehensive waste management platform that connects waste producers, collectors, and processing facilities. Our suite of applications streamlines the entire waste management process, from collection scheduling to recycling verification.',
     features: [
       'Real-time waste collection tracking',
@@ -52,7 +52,7 @@ const products = [
   {
     id: 'gfleet',
     title: 'GFleet',
-    tagline: 'Web dashboard for fleet owners—monitor vehicles & integrate with Gahitwen.',
+    tagline: 'Web dashboard for fleet owners monitor vehicles & integrate with Gahitwen.',
     description: 'GFleet provides fleet owners with a comprehensive web dashboard to monitor and manage their entire vehicle fleet. From maintenance scheduling to driver performance, GFleet delivers the insights needed to optimize operations and reduce costs.',
     features: [
       'Real-time vehicle tracking and monitoring',
@@ -62,7 +62,7 @@ const products = [
       'Seamless integration with Gahitwen Logistics',
     ],
     isWebApp: true,
-    ctaUrl: '#',
+    ctaUrl: 'https://gfleet.gahitwen.com',
   },
 ];
 
@@ -70,8 +70,8 @@ const Products = () => {
   return (
     <>
       <Helmet>
-        <title>Products | Gahitwen LLC</title>
-        <meta name="description" content="Explore Gahitwen LLC's innovative product suite including Risiti, Smart-Taka, Gahitwen Logistics, and GFleet." />
+        <title>Products | The Gahitwen LLC</title>
+        <meta name="description" content="Explore The Gahitwen LLC's innovative product suite including Risiti, Smart-Taka, Gahitwen Logistics, and GFleet." />
       </Helmet>
       
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
@@ -83,7 +83,7 @@ const Products = () => {
           >
             <SectionHeading
               title="Our Products"
-              subtitle="Discover Gahitwen LLC's innovative technology solutions designed to transform industries and improve efficiency."
+              subtitle="Discover The Gahitwen LLC's innovative technology solutions designed to transform industries and improve efficiency."
               centered
             />
           </motion.div>

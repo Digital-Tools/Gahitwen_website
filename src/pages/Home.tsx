@@ -8,8 +8,8 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Gahitwen LLC – Enabling Smarter Tech Solutions</title>
-        <meta name="description" content="From cutting-edge software to logistics and waste-management apps, Gahitwen LLC delivers innovative tech solutions." />
+        <title>Enabling Smarter Tech Solutions</title>
+        <meta name="description" content="From cutting-edge software to logistics and waste-management apps, The Gahitwen LLC delivers innovative tech solutions." />
       </Helmet>
       
       <Hero />

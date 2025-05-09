@@ -13,7 +13,7 @@ const ContactInfo = () => {
           <div className="ml-4">
             <h4 className="text-base font-medium text-brown-900">Address</h4>
             <address className="mt-1 not-italic text-gray-600">
-              Gahitwen LLC<br />
+              The Gahitwen LLC<br />
               131 Continental Dr Ste 305<br />
               Newark, DE 19713, USA
             </address>

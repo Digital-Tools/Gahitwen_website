@@ -5,8 +5,8 @@ const Privacy = () => {
   return (
     <>
       <Helmet>
-        <title>Privacy Policy | Gahitwen LLC</title>
-        <meta name="description" content="Gahitwen LLC's privacy policy outlines how we collect, use, and protect your personal information." />
+        <title>Privacy Policy | The Gahitwen LLC</title>
+        <meta name="description" content="The Gahitwen LLC's privacy policy outlines how we collect, use, and protect your personal information." />
       </Helmet>
       
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
@@ -25,7 +25,7 @@ const Privacy = () => {
               
               <h2 className="text-2xl font-bold text-brown-900 mb-4">Introduction</h2>
               <p>
-                Gahitwen LLC ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.
+                The Gahitwen LLC ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.
               </p>
               
               <h2 className="text-2xl font-bold text-brown-900 mb-4 mt-8">Information We Collect</h2>
@@ -71,7 +71,7 @@ const Privacy = () => {
                 If you have questions or comments about this Privacy Policy, please contact us at:
               </p>
               <p>
-                Gahitwen LLC<br />
+                The Gahitwen LLC<br />
                 131 Continental Dr Ste 305<br />
                 Newark, DE 19713, USA<br />
                 Email: privacy@gahitwen.com<br />

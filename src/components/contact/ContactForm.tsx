@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Send, Loader2 } from 'lucide-react';
 import Button from '../ui/Button';
+import emailjs from 'emailjs-com';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -26,21 +27,38 @@ const ContactForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError('');
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: '',
+
+    emailjs
+      .send(
+          import.meta.env.VITE_EMAILJS_SERVICE_ID,
+          import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          application: 'The Gahitwen LLC', // Important: Add your application name to know which site it comes from
+        },
+          import.meta.env.VITE_EMAILJS_USER_ID
+      )
+      .then(() => {
+        setIsSubmitting(false);
+        setSubmitSuccess(true);
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: '',
+        });
+
+        // Reset success message after 5 seconds
+        setTimeout(() => setSubmitSuccess(false), 5000);
+      })
+      .catch((error: any) => {
+        setIsSubmitting(false);
+        setSubmitError('Failed to send message. Please try again later.');
+        console.error('EmailJS Error:', error);
       });
-      
-      // Reset success message after 5 seconds
-      setTimeout(() => setSubmitSuccess(false), 5000);
-    }, 1500);
   };
   
   return (

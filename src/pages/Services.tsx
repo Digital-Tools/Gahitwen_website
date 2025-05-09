@@ -8,7 +8,6 @@ import {
   Database,
   ShieldCheck
 } from 'lucide-react';
-import SectionHeading from '../components/ui/SectionHeading';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 
@@ -61,8 +60,8 @@ const Services = () => {
   return (
     <>
       <Helmet>
-        <title>Services | Gahitwen LLC</title>
-        <meta name="description" content="Explore the comprehensive technology services offered by Gahitwen LLC, from custom software development to data analytics and AI consulting." />
+        <title>Services | The Gahitwen LLC</title>
+        <meta name="description" content="Explore the comprehensive technology services offered by The Gahitwen LLC, from custom software development to data analytics and AI consulting." />
       </Helmet>
       
       <section className="pt-32 pb-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-brown-900 to-brown-800 text-white">

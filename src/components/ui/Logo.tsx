@@ -11,7 +11,7 @@ const Logo = ({ invert = false }: LogoProps) => {
   return (
     <div className="flex items-center">
       <SunDim className={`mr-2 ${iconColorClass}`} size={28} />
-      <span className={`font-bold text-xl ${textColorClass}`}>Gahitwen</span>
+      <span className={`font-bold text-xl ${textColorClass}`}>The Gahitwen</span>
       <span className={`ml-1 text-xl ${textColorClass} opacity-80`}>LLC</span>
     </div>
   );

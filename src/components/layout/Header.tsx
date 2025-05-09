@@ -1,20 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import Logo from '../ui/Logo';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -24,10 +14,7 @@ const Header = () => {
     setIsOpen(false);
   };
 
-  const headerClasses = `
-    fixed w-full z-50 transition-all duration-300 py-4
-    ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent'}
-  `;
+  const headerClasses = "fixed w-full z-50 transition-all duration-300 py-4 bg-white shadow-md py-2";
 
   const linkClasses = ({ isActive }: { isActive: boolean }) => `
     relative font-medium text-base transition-colors duration-200
@@ -51,7 +38,7 @@ const Header = () => {
             <NavLink to="/" className={linkClasses}>Home</NavLink>
             <NavLink to="/products" className={linkClasses}>Products</NavLink>
             <NavLink to="/services" className={linkClasses}>Services</NavLink>
-            <NavLink to="/team" className={linkClasses}>Team</NavLink>
+            {/*<NavLink to="/team" className={linkClasses}>Team</NavLink>*/}
             <NavLink to="/contact" className={linkClasses}>Contact</NavLink>
           </nav>
 

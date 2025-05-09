@@ -8,8 +8,8 @@ const Contact = () => {
   return (
     <>
       <Helmet>
-        <title>Contact Us | Gahitwen LLC</title>
-        <meta name="description" content="Get in touch with Gahitwen LLC. We're here to answer your questions and discuss how our technology solutions can help your business." />
+        <title>Contact Us | The Gahitwen LLC</title>
+        <meta name="description" content="Get in touch with The Gahitwen LLC. We're here to answer your questions and discuss how our technology solutions can help your business." />
       </Helmet>
       
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">

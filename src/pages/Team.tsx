@@ -61,8 +61,8 @@ const Team = () => {
   return (
     <>
       <Helmet>
-        <title>Our Team | Gahitwen LLC</title>
-        <meta name="description" content="Meet the talented team behind Gahitwen LLC's innovative technology solutions and services." />
+        <title>Our Team | The Gahitwen LLC</title>
+        <meta name="description" content="Meet the talented team behind The Gahitwen LLC's innovative technology solutions and services." />
       </Helmet>
       
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
@@ -74,7 +74,7 @@ const Team = () => {
           >
             <SectionHeading
               title="Our Team"
-              subtitle="Meet the talented individuals who make Gahitwen LLC's vision a reality. Our diverse team brings together expertise in technology, business, and product development."
+              subtitle="Meet the talented individuals who make The Gahitwen LLC's vision a reality. Our diverse team brings together expertise in technology, business, and product development."
               centered
             />
           </motion.div>

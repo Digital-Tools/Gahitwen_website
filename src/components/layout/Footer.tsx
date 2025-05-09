@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import Logo from '../ui/Logo';
-import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import {Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import SquareArrowOutUpRight from "../icons/SquareArrowOutUpRight.tsx";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -39,10 +40,42 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4 text-yellow-500">Products</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Risiti</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Smart-Taka</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Gahitwen Logistics</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">GFleet</a></li>
+              <li>
+                <a
+                    href="https://risiti.gahitwen.com"
+                    className="text-gray-300 hover:text-white transition-colors flex items-center"
+                    target="_blank" rel="noopener noreferrer"
+                >
+                  Risiti <SquareArrowOutUpRight size={14} className="ml-1 inline-block"/>
+                </a>
+              </li>
+              <li>
+                <a
+                    href="https://smart-taka.gahitwen.com"
+                    className="text-gray-300 hover:text-white transition-colors flex items-center"
+                    target="_blank" rel="noopener noreferrer"
+                >
+                  Smart-Taka <SquareArrowOutUpRight size={14} className="ml-1 inline-block"/>
+                </a>
+              </li>
+              <li>
+                <a
+                    href="https://logistics.gahitwen.com"
+                    className="text-gray-300 hover:text-white transition-colors flex items-center"
+                    target="_blank" rel="noopener noreferrer"
+                >
+                  Gahitwen Logistics <SquareArrowOutUpRight size={14} className="ml-1 inline-block"/>
+                </a>
+              </li>
+              <li>
+                <a
+                    href="https://gfleet.gahitwen.com"
+                    className="text-gray-300 hover:text-white transition-colors flex items-center"
+                    target="_blank" rel="noopener noreferrer"
+                >
+                  GFleet <SquareArrowOutUpRight size={14} className="ml-1 inline-block"/>
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -50,9 +83,11 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4 text-yellow-500">Company</h3>
             <ul className="space-y-2">
               <li><NavLink to="/" className="text-gray-300 hover:text-white transition-colors">Home</NavLink></li>
-              <li><NavLink to="/services" className="text-gray-300 hover:text-white transition-colors">Services</NavLink></li>
-              <li><NavLink to="/team" className="text-gray-300 hover:text-white transition-colors">Team</NavLink></li>
-              <li><NavLink to="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</NavLink></li>
+              <li><NavLink to="/services"
+                           className="text-gray-300 hover:text-white transition-colors">Services</NavLink></li>
+              {/*<li><NavLink to="/team" className="text-gray-300 hover:text-white transition-colors">Team</NavLink></li>*/}
+              <li><NavLink to="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</NavLink>
+              </li>
             </ul>
           </div>
 
@@ -70,7 +105,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            © {currentYear} Gahitwen LLC. All rights reserved.
+            © {currentYear} The Gahitwen LLC. All rights reserved.
           </p>
           <p className="text-gray-400 text-sm mt-2 md:mt-0">
             131 Continental Dr Ste 305, Newark, DE 19713, USA
