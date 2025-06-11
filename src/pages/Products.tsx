@@ -16,8 +16,8 @@ const products = [
       'Integration with major accounting platforms',
       'Expense reports and analytics',
     ],
-    playStoreUrl: '#',
-    appStoreUrl: '#',
+    playStoreUrl: 'https://play.google.com/store/apps/details?id=com.rifazsolutions.receipt_scanner&pcampaignid=web_share',
+    appStoreUrl: 'https://apps.apple.com/us/app/risiti-ai/id6746781946',
   },
   {
     id: 'smart-taka',
@@ -31,8 +31,8 @@ const products = [
       'Digital payment processing',
       'Environmental impact reporting',
     ],
-    playStoreUrl: '#',
-    appStoreUrl: '#',
+    playStoreUrl: 'https://play.google.com/store/apps/details?id=com.gahitwen.smart_taka&pcampaignid=web_share',
+    appStoreUrl: 'https://apps.apple.com/us/app/smart-taka/id6739852151',
   },
   {
     id: 'gahitwen-logistics',
@@ -46,8 +46,8 @@ const products = [
       'In-app communication tools',
       'Automated payment processing',
     ],
-    playStoreUrl: '#',
-    appStoreUrl: '#',
+    playStoreUrl: 'https://play.google.com/store/apps/details?id=com.sitrab.user&pcampaignid=web_share',
+    appStoreUrl: 'https://apps.apple.com/us/app/gahitwen/id6502245565',
   },
   {
     id: 'gfleet',
