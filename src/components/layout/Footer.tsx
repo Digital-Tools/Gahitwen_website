@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import Logo from '../ui/Logo';
-import { Linkedin } from 'lucide-react';
+import Linkedin from '../icons/Linkedin';
 import SquareArrowOutUpRight from "../icons/SquareArrowOutUpRight.tsx";
 
 const Footer = () => {

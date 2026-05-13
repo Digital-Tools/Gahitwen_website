@@ -1,5 +1,6 @@
 import Card from '../ui/Card';
-import { Linkedin, Twitter } from 'lucide-react';
+import Linkedin from '../icons/Linkedin';
+import XIcon from '../icons/XIcon';
 
 type TeamMemberProps = {
   name: string;
@@ -46,7 +47,7 @@ const TeamMember = ({ name, title, bio, imageUrl, linkedin, twitter }: TeamMembe
                 rel="noopener noreferrer"
                 className="text-gray-600 hover:text-brown-900 transition-colors"
               >
-                <Twitter size={18} />
+                <XIcon size={18} />
                 <span className="sr-only">Twitter</span>
               </a>
             )}
