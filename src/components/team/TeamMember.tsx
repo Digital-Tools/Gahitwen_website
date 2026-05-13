@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import Card from '../ui/Card';
 import { Linkedin, Twitter } from 'lucide-react';
 

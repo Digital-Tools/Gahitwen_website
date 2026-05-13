@@ -73,7 +73,7 @@ const ContactForm = () => {
 
         setRefreshReCaptcha(prev => !prev);
       })
-      .catch((error: any) => {
+      .catch((error: unknown) => {
         setIsSubmitting(false);
         setSubmitError('Failed to send message. Please try again later.');
         console.error('EmailJS Error:', error);
