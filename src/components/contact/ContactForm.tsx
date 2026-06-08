@@ -40,6 +40,7 @@ const ContactForm = () => {
     setSubmitError('');
 
     if (!recaptchaToken) {
+      setIsSubmitting(false);
       setSubmitError('Please wait for reCAPTCHA verification');
       return;
     }

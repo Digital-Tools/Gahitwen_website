@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/ui/Seo';
 import Hero from '../components/home/Hero';
 import ProductsOverview from '../components/home/ProductsOverview';
 import ServicesOverview from '../components/home/ServicesOverview';
@@ -7,10 +7,11 @@ import CallToAction from '../components/home/CallToAction';
 const Home = () => {
   return (
     <>
-      <Helmet>
-        <title>Enabling Smarter Tech Solutions</title>
-        <meta name="description" content="From cutting-edge software to logistics and waste-management apps, The Gahitwen LLC delivers innovative tech solutions." />
-      </Helmet>
+      <Seo
+        title="Enabling Smarter Tech Solutions"
+        description="From cutting-edge software to logistics and waste-management apps, The Gahitwen LLC delivers innovative tech solutions."
+        path="/"
+      />
       
       <Hero />
       <ProductsOverview />

@@ -1,13 +1,14 @@
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/ui/Seo';
 import { motion } from 'framer-motion';
 
 const Privacy = () => {
   return (
     <>
-      <Helmet>
-        <title>Privacy Policy | The Gahitwen LLC</title>
-        <meta name="description" content="The Gahitwen LLC's privacy policy outlines how we collect, use, and protect your personal information." />
-      </Helmet>
+      <Seo
+        title="Privacy Policy"
+        description="The Gahitwen LLC's privacy policy outlines how we collect, use, and protect your personal information."
+        path="/privacy"
+      />
       
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-4xl">
@@ -18,7 +19,7 @@ const Privacy = () => {
           >
             <h1 className="text-3xl md:text-4xl font-bold text-brown-900 mb-8 text-center">Privacy Policy</h1>
             
-            <div className="bg-white rounded-lg shadow-md p-6 md:p-8 prose prose-lg max-w-none">
+            <div className="bg-white rounded-lg shadow-md p-6 md:p-8 max-w-none">
               <p className="text-gray-600 mb-6">
                 Last Updated: May 13, 2026
               </p>

@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/ui/Seo';
 import { motion } from 'framer-motion';
 import { 
   Code, 
@@ -59,10 +59,11 @@ const services = [
 const Services = () => {
   return (
     <>
-      <Helmet>
-        <title>Services | The Gahitwen LLC</title>
-        <meta name="description" content="Explore the comprehensive technology services offered by The Gahitwen LLC, from custom software development to data analytics and AI consulting." />
-      </Helmet>
+      <Seo
+        title="Services"
+        description="Explore the comprehensive technology services offered by The Gahitwen LLC, from custom software development to data analytics and AI consulting."
+        path="/services"
+      />
       
       <section className="pt-32 pb-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-brown-900 to-brown-800 text-white">
         <div className="container mx-auto">
