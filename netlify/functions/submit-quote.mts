@@ -9,13 +9,13 @@
 //   5. Draft the customer reply with AI (OpenRouter, free models) when
 //      configured — otherwise fall back to a built-in template.
 //   6. Deliver the ticket to whichever channel is configured:
-//        - Email via Mailgun (team notification + customer auto-reply)
+//        - Email via Resend OR Mailgun (team notification + customer auto-reply)
 //        - And/or a generic webhook (Zapier / Make / Chatwoot / HubSpot / etc.)
 //   7. Return the reference to the client (never the rates).
 //
-// Email goes through Mailgun (set MAILGUN_*). Ticketing is pluggable: set
-// HELPDESK_WEBHOOK_URL to forward every quote into a help desk later without
-// touching this code.
+// Email is provider-agnostic: set RESEND_API_KEY (preferred) or MAILGUN_*.
+// Ticketing is pluggable: set HELPDESK_WEBHOOK_URL to forward every quote into
+// a help desk later without touching this code.
 
 import {
   computeEstimate,
@@ -145,10 +145,41 @@ interface EmailParams {
   replyTo?: string;
 }
 
-// Send email via the Mailgun HTTP API.
-// Requires MAILGUN_API_KEY, MAILGUN_DOMAIN, and QUOTE_FROM_EMAIL.
-// Set MAILGUN_REGION=eu for EU-hosted Mailgun domains.
-const sendEmail = async (params: EmailParams): Promise<boolean> => {
+// Send via Resend's HTTP API. Requires RESEND_API_KEY and QUOTE_FROM_EMAIL.
+const sendViaResend = async (params: EmailParams): Promise<boolean> => {
+  const apiKey = env.RESEND_API_KEY;
+  const from = env.QUOTE_FROM_EMAIL;
+  if (!apiKey || !from) return false;
+
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to: params.to,
+        subject: params.subject,
+        text: params.text,
+        ...(params.replyTo ? { reply_to: params.replyTo } : {}),
+      }),
+    });
+    if (!res.ok) {
+      console.error('[submit-quote] Resend error:', res.status, await res.text());
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error('[submit-quote] Resend request failed:', err);
+    return false;
+  }
+};
+
+// Send via the Mailgun HTTP API. Requires MAILGUN_API_KEY, MAILGUN_DOMAIN, and
+// QUOTE_FROM_EMAIL. Set MAILGUN_REGION=eu for EU-hosted Mailgun domains.
+const sendViaMailgun = async (params: EmailParams): Promise<boolean> => {
   const apiKey = env.MAILGUN_API_KEY;
   const domain = env.MAILGUN_DOMAIN;
   const from = env.QUOTE_FROM_EMAIL;
@@ -186,6 +217,13 @@ const sendEmail = async (params: EmailParams): Promise<boolean> => {
     console.error('[submit-quote] Mailgun request failed:', err);
     return false;
   }
+};
+
+// Provider-agnostic sender: use Resend if configured, else Mailgun.
+const sendEmail = async (params: EmailParams): Promise<boolean> => {
+  if (env.RESEND_API_KEY) return sendViaResend(params);
+  if (env.MAILGUN_API_KEY) return sendViaMailgun(params);
+  return false;
 };
 
 // Default chain of free OpenRouter models, tried in order until one succeeds.
@@ -529,7 +567,7 @@ export const handler = async (event: {
   if (!delivered) {
     console.warn(
       `[submit-quote] ${ticketRef} captured but no delivery channel is configured ` +
-        `(set MAILGUN_API_KEY + MAILGUN_DOMAIN + QUOTE_FROM_EMAIL, and/or HELPDESK_WEBHOOK_URL).`
+        `(set RESEND_API_KEY or MAILGUN_* + QUOTE_FROM_EMAIL, and/or HELPDESK_WEBHOOK_URL).`
     );
   }
 
