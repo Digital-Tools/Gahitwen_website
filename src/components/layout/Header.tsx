@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import Logo from '../ui/Logo';
 
@@ -34,12 +34,18 @@ const Header = () => {
           </div>
 
           {/* Desktop navigation */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex items-center space-x-8">
             <NavLink to="/" className={linkClasses}>Home</NavLink>
             <NavLink to="/products" className={linkClasses}>Products</NavLink>
             <NavLink to="/services" className={linkClasses}>Services</NavLink>
             {/*<NavLink to="/team" className={linkClasses}>Team</NavLink>*/}
             <NavLink to="/contact" className={linkClasses}>Contact</NavLink>
+            <Link
+              to="/quote"
+              className="inline-flex items-center justify-center font-medium rounded-md transition-all duration-200 bg-yellow-500 text-brown-900 hover:bg-yellow-600 text-sm px-4 py-2"
+            >
+              Get a Quote
+            </Link>
           </nav>
 
           {/* Mobile menu button */}
@@ -102,6 +108,13 @@ const Header = () => {
           >
             Contact
           </NavLink>
+          <Link
+            to="/quote"
+            onClick={closeMenu}
+            className="inline-flex items-center justify-center font-medium rounded-md bg-yellow-500 text-brown-900 hover:bg-yellow-600 text-lg px-6 py-3 mt-2"
+          >
+            Get a Quote
+          </Link>
         </div>
       </div>
     </header>

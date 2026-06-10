@@ -172,8 +172,8 @@ const Services = () => {
                   </div>
                   <h3 className="text-2xl font-bold text-brown-900 mb-4">{service.title}</h3>
                   <p className="text-gray-600 mb-6 flex-grow">{service.description}</p>
-                  <Button to="/contact" variant="text" className="self-start">
-                    Learn More →
+                  <Button to={`/quote?service=${service.id}`} variant="text" className="self-start">
+                    Get a Quote →
                   </Button>
                 </Card>
               </motion.div>
@@ -227,8 +227,16 @@ const Services = () => {
             ))}
           </div>
 
-          <div className="text-center mt-12">
-            <Button to="/contact" size="lg">
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-12">
+            <Button to="/quote" size="lg">
+              Get a Quote
+            </Button>
+            <Button
+              to="/contact"
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-brown-900"
+            >
               Talk to a Security Expert
             </Button>
           </div>
@@ -244,8 +252,11 @@ const Services = () => {
                 Contact us today to discuss how our services can help you achieve your technology goals.
               </p>
             </div>
-            <div className="flex-shrink-0">
-              <Button to="/contact" size="lg">
+            <div className="flex-shrink-0 flex flex-col sm:flex-row gap-3">
+              <Button to="/quote" size="lg">
+                Get a Quote
+              </Button>
+              <Button to="/contact" size="lg" variant="outline">
                 Get in Touch
               </Button>
             </div>

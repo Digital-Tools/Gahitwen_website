@@ -13,6 +13,7 @@ const routes = [
   '/',
   '/products',
   '/services',
+  '/quote',
   '/contact',
   '/privacy',
   '/terms',

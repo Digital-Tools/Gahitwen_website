@@ -35,8 +35,12 @@ const Hero = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
+                        className="flex flex-col sm:flex-row justify-center gap-4"
                     >
-                        <Button to="/products" size="lg">
+                        <Button to="/quote" size="lg">
+                            Get a Quote
+                        </Button>
+                        <Button to="/products" variant="outline" size="lg">
                             Explore Our Products
                         </Button>
                     </motion.div>
