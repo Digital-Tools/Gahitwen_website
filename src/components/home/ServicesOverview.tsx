@@ -3,9 +3,11 @@ import {
   Code, 
   Cloud, 
   Smartphone, 
-  BarChart3 
+  BarChart3,
+  ShieldCheck
 } from 'lucide-react';
 import SectionHeading from '../ui/SectionHeading';
+import Button from '../ui/Button';
 
 const services = [
   {
@@ -31,6 +33,12 @@ const services = [
     name: 'Data Analytics & AI Consulting',
     description: 'Harness the power of your data with advanced analytics and artificial intelligence solutions.',
     icon: BarChart3,
+  },
+  {
+    id: 'cybersecurity',
+    name: 'Cybersecurity Services',
+    description: 'Penetration testing, managed security (SOC/MSSP), cloud security, and incident response to keep your business protected.',
+    icon: ShieldCheck,
   }
 ];
 
@@ -65,6 +73,12 @@ const ServicesOverview = () => {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <Button to="/services" variant="secondary">
+            View All Services
+          </Button>
         </div>
       </div>
     </section>
