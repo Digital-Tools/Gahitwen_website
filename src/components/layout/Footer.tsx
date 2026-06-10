@@ -86,6 +86,8 @@ const Footer = () => {
               <li><NavLink to="/products" className="text-gray-300 hover:text-white transition-colors">Products</NavLink></li>
               <li><NavLink to="/services"
                            className="text-gray-300 hover:text-white transition-colors">Services</NavLink></li>
+              <li><NavLink to="/services#cybersecurity"
+                           className="text-gray-300 hover:text-white transition-colors">Cybersecurity</NavLink></li>
               {/*<li><NavLink to="/team" className="text-gray-300 hover:text-white transition-colors">Team</NavLink></li>*/}
               <li><NavLink to="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</NavLink>
               </li>
