@@ -13,6 +13,7 @@ import {
   scopesForBilling,
   getService,
 } from '../../lib/quote';
+import { COUNTRIES, PRIORITY_COUNTRIES } from '../../lib/countries';
 
 type SubmitState = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -320,11 +321,23 @@ const QuoteForm = () => {
               </div>
               <div>
                 <label htmlFor="phone" className={labelClasses}>Phone</label>
-                <input id="phone" name="phone" value={contact.phone} onChange={handleContactChange} className={inputClasses} />
+                <input id="phone" name="phone" type="tel" value={contact.phone} onChange={handleContactChange} className={inputClasses} />
               </div>
               <div>
                 <label htmlFor="country" className={labelClasses}>Country</label>
-                <input id="country" name="country" value={contact.country} onChange={handleContactChange} className={inputClasses} />
+                <select id="country" name="country" value={contact.country} onChange={handleContactChange} className={inputClasses}>
+                  <option value="">Select your country</option>
+                  <optgroup label="Frequently selected">
+                    {PRIORITY_COUNTRIES.map((c) => (
+                      <option key={`p-${c}`} value={c}>{c}</option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="All countries">
+                    {COUNTRIES.map((c) => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </optgroup>
+                </select>
               </div>
               <div>
                 <label htmlFor="timeline" className={labelClasses}>Desired timeline</label>
