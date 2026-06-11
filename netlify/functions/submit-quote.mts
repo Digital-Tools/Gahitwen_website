@@ -398,10 +398,14 @@ const sendEmail = async (params: EmailParams): Promise<boolean> => {
 
 // Default chain of free OpenRouter models, tried in order until one succeeds.
 // Override (or reorder) via OPENROUTER_MODEL as a comma-separated list.
+// NOTE: OpenRouter retires free models over time. Verify IDs are still live at
+// https://openrouter.ai/api/v1/models (filter for ":free") if AI drafting stops
+// working. Listing several gives resilience against per-model rate limits.
 const DEFAULT_OPENROUTER_MODELS = [
+  'openai/gpt-oss-120b:free',
   'meta-llama/llama-3.3-70b-instruct:free',
-  'deepseek/deepseek-chat-v3-0324:free',
-  'google/gemini-2.0-flash-exp:free',
+  'qwen/qwen3-next-80b-a3b-instruct:free',
+  'google/gemma-4-31b-it:free',
 ];
 
 // Single attempt against one model. Returns the email body, or null on any
@@ -468,11 +472,20 @@ const runAiChain = async (
   userPrompt: string
 ): Promise<string | null> => {
   const apiKey = env.OPENROUTER_API_KEY;
-  if (!apiKey) return null;
-  for (const model of getModelChain()) {
-    const body = await callOpenRouterModel(apiKey, model, systemPrompt, userPrompt);
-    if (body) return body;
+  if (!apiKey) {
+    console.warn('[submit-quote] OPENROUTER_API_KEY not set — using template fallback.');
+    return null;
   }
+  const chain = getModelChain();
+  console.log(`[submit-quote] OpenRouter: trying ${chain.length} model(s):`, chain.join(', '));
+  for (const model of chain) {
+    const body = await callOpenRouterModel(apiKey, model, systemPrompt, userPrompt);
+    if (body) {
+      console.log(`[submit-quote] OpenRouter: success with "${model}".`);
+      return body;
+    }
+  }
+  console.warn('[submit-quote] OpenRouter: all models failed — using template fallback.');
   return null;
 };
 
