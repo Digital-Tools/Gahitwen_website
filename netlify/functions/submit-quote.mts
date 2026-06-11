@@ -138,10 +138,178 @@ const buildSummary = (
   return lines.join('\n');
 };
 
+// ---------------------------------------------------------------------------
+// HTML email rendering (branded, responsive, inline-styled for email clients).
+// Plain text is always sent alongside as a fallback.
+// ---------------------------------------------------------------------------
+
+const BRAND = {
+  brown: '#3B271F',
+  yellow: '#FFC200',
+  pageBg: '#f6f6f4',
+  card: '#ffffff',
+  footerBg: '#faf8f7',
+  border: '#efe8e5',
+  text: '#3B271F',
+  muted: '#816155',
+};
+
+const escapeHtml = (s: string): string =>
+  s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+// Convert plain text into HTML paragraphs (blank line = new paragraph,
+// single newline = <br>). Input is escaped first.
+const textToHtml = (s: string): string =>
+  s
+    .trim()
+    .split(/\n{2,}/)
+    .map(
+      (para) =>
+        `<p style="margin:0 0 16px;">${escapeHtml(para).replace(/\n/g, '<br>')}</p>`
+    )
+    .join('');
+
+// Full HTML document wrapper with branded header/footer.
+const renderEmailShell = (opts: {
+  preheader: string;
+  headerTag: string;
+  contentHtml: string;
+}): string => `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="x-apple-disable-message-reformatting">
+</head>
+<body style="margin:0;padding:0;background:${BRAND.pageBg};">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">${escapeHtml(opts.preheader)}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${BRAND.pageBg};padding:24px 12px;">
+<tr><td align="center">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:100%;background:${BRAND.card};border-radius:12px;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;box-shadow:0 1px 3px rgba(0,0,0,0.08);">
+<tr><td style="background:${BRAND.brown};padding:22px 32px;">
+<table role="presentation" width="100%"><tr>
+<td style="font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.2px;">The Gahitwen <span style="color:${BRAND.yellow};">LLC</span></td>
+<td align="right" style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#c8b2aa;">${escapeHtml(opts.headerTag)}</td>
+</tr></table>
+</td></tr>
+<tr><td style="height:4px;background:${BRAND.yellow};font-size:0;line-height:0;">&nbsp;</td></tr>
+<tr><td style="padding:32px;color:${BRAND.text};font-size:15px;line-height:1.6;">${opts.contentHtml}</td></tr>
+<tr><td style="padding:20px 32px;background:${BRAND.footerBg};border-top:1px solid ${BRAND.border};font-size:12px;color:${BRAND.muted};line-height:1.6;">
+<strong style="color:${BRAND.text};">The Gahitwen LLC</strong> · Software &amp; Cybersecurity<br>
+<a href="mailto:info@gahitwen.com" style="color:${BRAND.muted};text-decoration:none;">info@gahitwen.com</a> &nbsp;·&nbsp; <a href="https://gahitwen.com" style="color:${BRAND.muted};text-decoration:none;">gahitwen.com</a>
+</td></tr>
+</table>
+</td></tr>
+</table>
+</body>
+</html>`;
+
+// A small pill showing the ticket reference.
+const refBadge = (ref: string): string =>
+  `<div style="display:inline-block;background:${BRAND.brown};color:#ffffff;font-size:12px;font-weight:600;letter-spacing:0.5px;padding:6px 12px;border-radius:999px;margin-bottom:20px;">Ref ${escapeHtml(
+    ref
+  )}</div>`;
+
+// Render a definition-style table of label/value rows.
+const kvTable = (rows: [string, string][]): string =>
+  `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 0 8px;">${rows
+    .map(
+      ([k, v]) =>
+        `<tr><td style="padding:7px 0;width:130px;vertical-align:top;color:${BRAND.muted};font-size:13px;">${escapeHtml(
+          k
+        )}</td><td style="padding:7px 0;vertical-align:top;color:${BRAND.text};font-size:14px;">${escapeHtml(
+          v || '—'
+        )}</td></tr>`
+    )
+    .join('')}</table>`;
+
+const sectionHeading = (label: string): string =>
+  `<h2 style="margin:28px 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:${BRAND.yellow};border-bottom:1px solid ${BRAND.border};padding-bottom:6px;">${escapeHtml(
+    label
+  )}</h2>`;
+
+// Customer acknowledgement email (wraps the AI/template body).
+const renderCustomerHtml = (opts: {
+  ticketRef: string;
+  bodyText: string;
+}): string =>
+  renderEmailShell({
+    preheader: `Thanks for your request — your reference is ${opts.ticketRef}.`,
+    headerTag: 'Quote Request',
+    contentHtml: `${refBadge(opts.ticketRef)}${textToHtml(opts.bodyText)}`,
+  });
+
+// Internal team notification email with structured ticket data.
+const renderTeamHtml = (opts: {
+  ticketRef: string;
+  primary: Estimate;
+  additional: Estimate[];
+  scopeLabel: string;
+  regionName: string;
+  contact: ContactPayload;
+  suggestionsText: string | null;
+}): string => {
+  const c = opts.contact;
+  const estimateRows: [string, string][] = [
+    [opts.primary.serviceName, estimateLine(opts.primary).replace(`${opts.primary.serviceName}: `, '')],
+    ...opts.additional.map(
+      (e): [string, string] => [`+ ${e.serviceName}`, estimateLine(e).replace(`${e.serviceName}: `, '')]
+    ),
+  ];
+
+  const messageHtml = `<div style="background:${BRAND.footerBg};border:1px solid ${BRAND.border};border-radius:8px;padding:14px 16px;font-size:14px;color:${BRAND.text};line-height:1.6;white-space:pre-wrap;">${escapeHtml(
+    c.message || '—'
+  )}</div>`;
+
+  const suggestionsBlock = opts.suggestionsText
+    ? `${sectionHeading('AI suggestions (internal — review before sending)')}<div style="background:#fffbeb;border:1px solid #ffe685;border-radius:8px;padding:14px 16px;font-size:14px;color:${BRAND.text};line-height:1.6;">${textToHtml(
+        opts.suggestionsText
+      )}</div>`
+    : '';
+
+  const content = `
+${refBadge(opts.ticketRef)}
+<h1 style="margin:0 0 4px;font-size:22px;color:${BRAND.text};">New quote request</h1>
+<p style="margin:0 0 8px;color:${BRAND.muted};font-size:14px;">A prospective client just submitted the form. Reply directly to reach them.</p>
+${sectionHeading('Estimate (indicative, non-binding)')}
+${kvTable(estimateRows)}
+${sectionHeading('Engagement')}
+${kvTable([
+    ['Primary service', opts.primary.serviceName],
+    ['Engagement size', opts.scopeLabel],
+    ['Region', `${opts.regionName} (${opts.primary.currency})`],
+  ])}
+${sectionHeading('Contact')}
+${kvTable([
+    ['Name', c.name || '—'],
+    ['Email', c.email || '—'],
+    ['Company', c.company || '—'],
+    ['Phone', c.phone || '—'],
+    ['Country', c.country || '—'],
+    ['Timeline', c.timeline || '—'],
+    ['Budget', c.budget || '—'],
+  ])}
+${sectionHeading('Project details')}
+${messageHtml}
+${suggestionsBlock}`;
+
+  return renderEmailShell({
+    preheader: `${opts.primary.serviceName} · ${opts.scopeLabel} · ${opts.regionName}`,
+    headerTag: 'Internal Ticket',
+    contentHtml: content,
+  });
+};
+
 interface EmailParams {
   to: string;
   subject: string;
   text: string;
+  html?: string;
   replyTo?: string;
 }
 
@@ -163,6 +331,7 @@ const sendViaResend = async (params: EmailParams): Promise<boolean> => {
         to: params.to,
         subject: params.subject,
         text: params.text,
+        ...(params.html ? { html: params.html } : {}),
         ...(params.replyTo ? { reply_to: params.replyTo } : {}),
       }),
     });
@@ -196,6 +365,7 @@ const sendViaMailgun = async (params: EmailParams): Promise<boolean> => {
     subject: params.subject,
     text: params.text,
   });
+  if (params.html) form.set('html', params.html);
   if (params.replyTo) form.set('h:Reply-To', params.replyTo);
 
   try {
@@ -524,25 +694,38 @@ export const handler = async (event: {
       estimateBlock +
       `— The Gahitwen Team\ninfo@gahitwen.com`;
 
+  const customerHtml = renderCustomerHtml({ ticketRef, bodyText: customerBody });
+
   // Team email: raw structured data, optionally with an AI "suggested reply /
   // next steps" block appended (internal only). Toggle with
   // QUOTE_TEAM_AI_SUGGESTIONS=false. The raw summary is always preserved.
   let teamText = summary;
+  let teamSuggestions: string | null = null;
   if (env.QUOTE_TEAM_AI_SUGGESTIONS !== 'false') {
-    const suggestions = await generateAiTeamSuggestions({
+    teamSuggestions = await generateAiTeamSuggestions({
       contact,
       serviceName: primary.serviceName,
       scopeLabel: scope?.label ?? payload.scopeId ?? '-',
       regionName: region?.name ?? '-',
       estimateLineText: estimateLine(primary),
     });
-    if (suggestions) {
+    if (teamSuggestions) {
       teamText =
         `${summary}\n\n` +
         `== AI suggestions (internal — review before sending) ==\n` +
-        suggestions;
+        teamSuggestions;
     }
   }
+
+  const teamHtml = renderTeamHtml({
+    ticketRef,
+    primary,
+    additional,
+    scopeLabel: scope?.label ?? payload.scopeId ?? '-',
+    regionName: region?.name ?? '-',
+    contact,
+    suggestionsText: teamSuggestions,
+  });
 
   // --- Deliver (best-effort across configured channels) ---
   const teamEmail = env.QUOTE_TEAM_EMAIL || env.QUOTE_FROM_EMAIL;
@@ -552,6 +735,7 @@ export const handler = async (event: {
           to: teamEmail,
           subject: `New quote request ${ticketRef} — ${primary.serviceName}`,
           text: teamText,
+          html: teamHtml,
           replyTo: contact.email,
         })
       : Promise.resolve(false),
@@ -559,6 +743,7 @@ export const handler = async (event: {
       to: contact.email!,
       subject: `We received your quote request (${ticketRef})`,
       text: customerBody,
+      html: customerHtml,
     }),
     postWebhook(ticket),
   ]);
