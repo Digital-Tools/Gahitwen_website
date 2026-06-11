@@ -3,11 +3,12 @@
 // since they're a primary focus, followed by the full alphabetical list.
 
 export const PRIORITY_COUNTRIES: string[] = [
-  'Kenya',
   'Tanzania',
+  'Kenya',
   'Uganda',
   'Rwanda',
   'Burundi',
+  'Mozambique',
   'South Sudan',
   'Ethiopia',
   'United States',

@@ -144,14 +144,15 @@ const buildSummary = (
 // ---------------------------------------------------------------------------
 
 const BRAND = {
-  brown: '#3B271F',
+  brown: '#3B271F', // header banner background only (white text on top)
   yellow: '#FFC200',
   pageBg: '#f6f6f4',
   card: '#ffffff',
   footerBg: '#faf8f7',
-  border: '#efe8e5',
-  text: '#3B271F',
-  muted: '#816155',
+  border: '#ece4e0',
+  heading: '#5a4a42', // titles — softened from the near-black brand brown
+  text: '#5f5048', // body copy — warm medium brown, easy on the eyes
+  muted: '#8a7268', // labels / secondary text
 };
 
 const escapeHtml = (s: string): string =>
@@ -200,7 +201,7 @@ const renderEmailShell = (opts: {
 <tr><td style="height:4px;background:${BRAND.yellow};font-size:0;line-height:0;">&nbsp;</td></tr>
 <tr><td style="padding:32px;color:${BRAND.text};font-size:15px;line-height:1.6;">${opts.contentHtml}</td></tr>
 <tr><td style="padding:20px 32px;background:${BRAND.footerBg};border-top:1px solid ${BRAND.border};font-size:12px;color:${BRAND.muted};line-height:1.6;">
-<strong style="color:${BRAND.text};">The Gahitwen LLC</strong> · Software &amp; Cybersecurity<br>
+<strong style="color:${BRAND.heading};">The Gahitwen LLC</strong> · Software &amp; Cybersecurity<br>
 <a href="mailto:info@gahitwen.com" style="color:${BRAND.muted};text-decoration:none;">info@gahitwen.com</a> &nbsp;·&nbsp; <a href="https://gahitwen.com" style="color:${BRAND.muted};text-decoration:none;">gahitwen.com</a>
 </td></tr>
 </table>
@@ -274,7 +275,7 @@ const renderTeamHtml = (opts: {
 
   const content = `
 ${refBadge(opts.ticketRef)}
-<h1 style="margin:0 0 4px;font-size:22px;color:${BRAND.text};">New quote request</h1>
+<h1 style="margin:0 0 4px;font-size:22px;color:${BRAND.heading};">New quote request</h1>
 <p style="margin:0 0 8px;color:${BRAND.muted};font-size:14px;">A prospective client just submitted the form. Reply directly to reach them.</p>
 ${sectionHeading('Estimate (indicative, non-binding)')}
 ${kvTable(estimateRows)}
