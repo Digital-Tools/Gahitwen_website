@@ -746,7 +746,7 @@ export const handler = async (event: {
     teamEmail
       ? sendEmail({
           to: teamEmail,
-          subject: `🔔 PENDING QUOTE — Action needed: ${primary.serviceName} (${ticketRef})`,
+          subject: `PENDING QUOTE — Action needed: ${primary.serviceName} (${ticketRef})`,
           text: teamText,
           html: teamHtml,
           replyTo: contact.email,
