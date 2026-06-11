@@ -101,6 +101,32 @@ const estimateLine = (e: Estimate): string => {
   return `${e.serviceName}: ${formatEstimateRange(e)}${usd}`;
 };
 
+// Round down to ~2 significant figures so a soft "starting from" anchor reads
+// like a clean ballpark (e.g. 31,460,000 -> 31,000,000; 12,100 -> 12,000).
+const roundSoftDown = (n: number): number => {
+  if (!Number.isFinite(n) || n <= 0) return 0;
+  const magnitude = Math.pow(10, Math.floor(Math.log10(n)));
+  const step = magnitude / 10;
+  return Math.floor(n / step) * step;
+};
+
+// Soft, single-figure starting anchor in the customer's local currency.
+const softFromText = (e: Estimate): string =>
+  `from around ${formatMoney(roundSoftDown(e.minLocal), e.currency)}`;
+
+// How pricing is presented to the CUSTOMER (the team email always keeps the
+// full range internally):
+//   'soft'  (default) — one gentle "starts around X" ballpark, framed as guidance
+//   'exact'           — the full indicative range
+//   'none'            — no pricing; a human follows up with a tailored quote
+// Back-compat: QUOTE_SEND_ESTIMATE_TO_CUSTOMER=false forces 'none'.
+type PricingMode = 'soft' | 'exact' | 'none';
+const getCustomerPricingMode = (): PricingMode => {
+  if (env.QUOTE_SEND_ESTIMATE_TO_CUSTOMER === 'false') return 'none';
+  const m = (env.QUOTE_CUSTOMER_PRICING || 'soft').toLowerCase();
+  return m === 'exact' || m === 'none' ? m : 'soft';
+};
+
 const buildSummary = (
   ref: string,
   payload: QuotePayload,
@@ -499,6 +525,7 @@ const generateAiCustomerEmail = async (params: {
   serviceName: string;
   regionName: string;
   scopeLabel: string;
+  pricingMode: PricingMode;
   estimateText: string | null; // null when pricing must be withheld
 }): Promise<string | null> => {
   const c = params.contact;
@@ -506,9 +533,14 @@ const generateAiCustomerEmail = async (params: {
   const systemPrompt =
     'You write concise, friendly B2B customer-service emails for The Gahitwen LLC, a software and cybersecurity firm. Never fabricate prices or commitments.';
 
-  const pricingRule = params.estimateText
-    ? `Mention this exact indicative estimate verbatim and call it non-binding: "${params.estimateText}". Make clear a tailored quote follows within 1–2 business days.`
-    : `Do NOT mention any prices, rates, currencies, or numeric estimates. Say the team will review the full scope and send a tailored quote within 1–2 business days.`;
+  let pricingRule: string;
+  if (params.pricingMode === 'exact' && params.estimateText) {
+    pricingRule = `Mention this exact indicative estimate verbatim and call it non-binding: "${params.estimateText}". Make clear a tailored quote follows within 1–2 business days.`;
+  } else if (params.pricingMode === 'soft' && params.estimateText) {
+    pricingRule = `You may share ONE soft, ballpark starting figure exactly as written — "${params.estimateText}" — and frame it clearly as a rough starting point that depends on final scope, NOT a quote. Do not mention any other numbers, ranges, or an upper bound. Make clear a tailored quote follows within 1–2 business days.`;
+  } else {
+    pricingRule = `Do NOT mention any prices, rates, currencies, or numeric estimates. Say the team will review the full scope and send a tailored quote within 1–2 business days.`;
+  }
 
   const userPrompt = [
     `Write the BODY of a short, warm, professional acknowledgement email to a prospective client who just requested a quote.`,
@@ -670,15 +702,15 @@ export const handler = async (event: {
     summary,
   };
 
-  // Human-intervention switch: when QUOTE_SEND_ESTIMATE_TO_CUSTOMER=false, the
-  // customer only gets an acknowledgement and a person sends pricing manually
-  // (the team email always includes the estimate either way). Defaults to
-  // sending the indicative estimate to the customer.
-  const sendEstimateToCustomer =
-    env.QUOTE_SEND_ESTIMATE_TO_CUSTOMER !== 'false';
-  const customerEstimateText = sendEstimateToCustomer
-    ? formatEstimateRange(primary)
-    : null;
+  // How pricing is shown to the customer (soft ballpark by default). The team
+  // email always carries the full internal estimate regardless of this setting.
+  const pricingMode = getCustomerPricingMode();
+  const customerEstimateText =
+    pricingMode === 'exact'
+      ? formatEstimateRange(primary)
+      : pricingMode === 'soft'
+        ? softFromText(primary)
+        : null;
 
   const region = getRegion(payload.regionId ?? '');
   const scope = getScope(primary.billing, payload.scopeId ?? '');
@@ -690,15 +722,26 @@ export const handler = async (event: {
     serviceName: primary.serviceName,
     regionName: region?.name ?? '-',
     scopeLabel: scope?.label ?? payload.scopeId ?? '-',
+    pricingMode,
     estimateText: customerEstimateText,
   });
 
-  const estimateBlock = customerEstimateText
-    ? `Indicative estimate: ${customerEstimateText}\n` +
+  let estimateBlock: string;
+  if (pricingMode === 'exact' && customerEstimateText) {
+    estimateBlock =
+      `Indicative estimate: ${customerEstimateText}\n` +
       `This is a non-binding estimate. Our team will review the full scope of ` +
-      `your project and follow up with a tailored quote within 1–2 business days.\n\n`
-    : `Our team will review the full scope of your project and follow up with a ` +
+      `your project and follow up with a tailored quote within 1–2 business days.\n\n`;
+  } else if (pricingMode === 'soft' && customerEstimateText) {
+    estimateBlock =
+      `As a rough starting point, projects like this typically begin ${customerEstimateText}. ` +
+      `That's only a ballpark that varies with scope — not a quote. Our team will review ` +
+      `the full scope of your project and follow up with a tailored quote within 1–2 business days.\n\n`;
+  } else {
+    estimateBlock =
+      `Our team will review the full scope of your project and follow up with a ` +
       `tailored quote within 1–2 business days.\n\n`;
+  }
 
   const customerBody =
     aiBody ??
