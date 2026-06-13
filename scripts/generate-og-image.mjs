@@ -24,22 +24,14 @@ const html = `<!DOCTYPE html>
     font-family: Inter, system-ui, sans-serif; position: relative;
   }
   .bar { position: absolute; top: 0; left: 0; right: 0; height: 8px; background: #FFC200; }
-  .logo { width: 180px; height: 180px; object-fit: contain; margin-bottom: 28px; }
-  .title { font-size: 56px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
-  .title span { color: #FFC200; }
-  .tagline {
-    margin-top: 16px; font-size: 26px; font-weight: 600; color: #c8b2aa;
-    letter-spacing: 0.5px;
-  }
-  .domain { margin-top: 32px; font-size: 22px; color: #816155; }
+  .logo { width: 200px; height: 200px; object-fit: contain; margin-bottom: 32px; }
+  .title { font-size: 72px; font-weight: 700; color: #FFC200; letter-spacing: -1px; }
 </style></head>
 <body>
   <div class="card">
     <div class="bar"></div>
     <img class="logo" src="data:image/png;base64,${logoBase64}" alt="" />
-    <div class="title">The Gahitwen <span>LLC</span></div>
-    <div class="tagline">Software &amp; Cybersecurity Solutions</div>
-    <div class="domain">gahitwen.com</div>
+    <div class="title">Gahitwen</div>
   </div>
 </body></html>`;
 

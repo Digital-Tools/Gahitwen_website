@@ -47,7 +47,7 @@ const Seo = ({
       <meta property="og:image" content={DEFAULT_OG_IMAGE} />
       <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
       <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
-      <meta property="og:image:alt" content={`${SITE_NAME} — Software & Cybersecurity Solutions`} />
+      <meta property="og:image:alt" content="Gahitwen" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
