@@ -2,7 +2,9 @@ import { Helmet } from 'react-helmet-async';
 
 const SITE_NAME = 'The Gahitwen LLC';
 const SITE_URL = 'https://gahitwen.com';
-const DEFAULT_OG_IMAGE = `${SITE_URL}/favicon.svg`;
+const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
+const OG_IMAGE_WIDTH = 1200;
+const OG_IMAGE_HEIGHT = 630;
 
 type SeoProps = {
   title: string;
@@ -43,6 +45,9 @@ const Seo = ({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:image" content={DEFAULT_OG_IMAGE} />
+      <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+      <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
+      <meta property="og:image:alt" content={`${SITE_NAME} — Software & Cybersecurity Solutions`} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />

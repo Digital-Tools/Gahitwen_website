@@ -3,22 +3,14 @@ import puppeteer from 'puppeteer';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { SITE_ROUTES } from './site-routes.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const distDir = resolve(__dirname, '..', 'dist');
 
 // Routes to prerender into static HTML. Keep in sync with src/App.tsx
 // (the catch-all 404 route is intentionally excluded).
-const routes = [
-  '/',
-  '/products',
-  '/services',
-  '/quote',
-  '/team',
-  '/contact',
-  '/privacy',
-  '/terms',
-];
+const routes = SITE_ROUTES.map((r) => r.path);
 
 const outFileForRoute = (route) => {
   if (route === '/') return resolve(distDir, 'index.html');

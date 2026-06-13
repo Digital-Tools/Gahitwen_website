@@ -9,10 +9,12 @@ import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import NotFound from './pages/NotFound';
+import GoogleAnalytics from './components/analytics/GoogleAnalytics';
 
 function App() {
   return (
     <Router>
+      <GoogleAnalytics />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
