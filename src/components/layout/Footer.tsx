@@ -1,7 +1,10 @@
 import { NavLink } from 'react-router-dom';
 import Logo from '../ui/Logo';
 import Linkedin from '../icons/Linkedin';
+import Instagram from '../icons/Instagram';
+import XIcon from '../icons/XIcon';
 import SquareArrowOutUpRight from "../icons/SquareArrowOutUpRight.tsx";
+import { SOCIAL_LINKS } from '../../lib/social';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -18,22 +21,33 @@ const Footer = () => {
               Enabling smarter tech solutions through innovative software and platforms.
             </p>
             <div className="flex space-x-4">
-              {/*<a href="#" className="text-gray-300 hover:text-yellow-500 transition-colors">*/}
-              {/*  <Facebook size={20} />*/}
-              {/*  <span className="sr-only">Facebook</span>*/}
-              {/*</a>*/}
-              {/*<a href="#" className="text-gray-300 hover:text-yellow-500 transition-colors">*/}
-              {/*  <Twitter size={20} />*/}
-              {/*  <span className="sr-only">Twitter</span>*/}
-              {/*</a>*/}
-              <a href="https://www.linkedin.com/in/gahitwen/" className="text-gray-300 hover:text-yellow-500 transition-colors">
+              <a
+                href={SOCIAL_LINKS.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-yellow-500 transition-colors"
+              >
                 <Linkedin size={20} />
                 <span className="sr-only">LinkedIn</span>
               </a>
-              {/*<a href="#" className="text-gray-300 hover:text-yellow-500 transition-colors">*/}
-              {/*  <Instagram size={20} />*/}
-              {/*  <span className="sr-only">Instagram</span>*/}
-              {/*</a>*/}
+              <a
+                href={SOCIAL_LINKS.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-yellow-500 transition-colors"
+              >
+                <Instagram size={20} />
+                <span className="sr-only">Instagram</span>
+              </a>
+              <a
+                href={SOCIAL_LINKS.x}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-yellow-500 transition-colors"
+              >
+                <XIcon size={20} />
+                <span className="sr-only">X</span>
+              </a>
             </div>
           </div>
           

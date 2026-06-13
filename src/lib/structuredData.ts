@@ -1,3 +1,5 @@
+import { SOCIAL_SAME_AS } from './social';
+
 const SITE_URL = 'https://gahitwen.com';
 
 export const organizationSchema = {
@@ -10,7 +12,7 @@ export const organizationSchema = {
     'The Gahitwen LLC delivers innovative tech solutions, from custom software and cloud engineering to cybersecurity services.',
   email: 'info@gahitwen.com',
   telephone: '+1-302-607-5297',
-  sameAs: ['https://www.linkedin.com/in/gahitwen/'],
+  sameAs: SOCIAL_SAME_AS,
   address: {
     '@type': 'PostalAddress',
     streetAddress: '131 Continental Dr Ste 305',

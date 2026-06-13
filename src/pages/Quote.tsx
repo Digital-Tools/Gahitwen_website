@@ -8,7 +8,7 @@ const Quote = () => {
     <>
       <Seo
         title="Get a Quote"
-        description="Request a tailored quote from The Gahitwen LLC for custom software, cloud & DevOps, data & AI, and cybersecurity services. Get an instant indicative estimate in your local currency with international rates."
+        description="Request a tailored quote from The Gahitwen LLC for custom software, cloud & DevOps, data & AI, and cybersecurity services. We review your scope and follow up within 1–2 business days."
         path="/quote"
         keywords={[
           'get a quote',
@@ -31,8 +31,8 @@ const Quote = () => {
           >
             <h1 className="text-4xl sm:text-5xl font-bold mb-6">Get a Quote</h1>
             <p className="text-xl text-gray-300">
-              Tell us what you need and get an instant indicative estimate in your
-              local currency. We&apos;ll follow up with a tailored proposal.
+              Tell us what you need. We&apos;ll review the full scope of your project
+              and follow up with a tailored quote within 1–2 business days.
             </p>
           </motion.div>
         </div>

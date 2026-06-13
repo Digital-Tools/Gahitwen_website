@@ -4,6 +4,9 @@ import SectionHeading from '../components/ui/SectionHeading';
 import ContactForm from '../components/contact/ContactForm';
 import ContactInfo from '../components/contact/ContactInfo';
 import Linkedin from '../components/icons/Linkedin';
+import Instagram from '../components/icons/Instagram';
+import XIcon from '../components/icons/XIcon';
+import { SOCIAL_LINKS } from '../lib/social';
 
 const Contact = () => {
   return (
@@ -47,17 +50,37 @@ const Contact = () => {
                 <div className="mt-10 bg-gray-100 p-4 rounded-lg">
                   <h3 className="text-lg font-semibold text-brown-900 mb-2">Connect With Us</h3>
                   <p className="text-gray-600 mb-4">
-                    Follow us on LinkedIn to stay updated with our latest news and product releases.
+                    Follow us for the latest news, product updates, and insights.
                   </p>
-                  <a
-                    href="https://www.linkedin.com/in/gahitwen/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-gray-600 hover:text-brown-900 transition-colors"
-                  >
-                    <Linkedin size={24} />
-                    <span className="ml-2 font-medium">The Gahitwen LLC on LinkedIn</span>
-                  </a>
+                  <div className="flex flex-wrap gap-4">
+                    <a
+                      href={SOCIAL_LINKS.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-gray-600 hover:text-brown-900 transition-colors"
+                    >
+                      <Linkedin size={24} />
+                      <span className="ml-2 font-medium">LinkedIn</span>
+                    </a>
+                    <a
+                      href={SOCIAL_LINKS.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-gray-600 hover:text-brown-900 transition-colors"
+                    >
+                      <Instagram size={24} />
+                      <span className="ml-2 font-medium">Instagram</span>
+                    </a>
+                    <a
+                      href={SOCIAL_LINKS.x}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-gray-600 hover:text-brown-900 transition-colors"
+                    >
+                      <XIcon size={24} />
+                      <span className="ml-2 font-medium">X</span>
+                    </a>
+                  </div>
                 </div>
               </motion.div>
             </div>
