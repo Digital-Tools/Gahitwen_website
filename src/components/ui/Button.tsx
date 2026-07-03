@@ -50,8 +50,13 @@ const Button = ({
   }
   
   if (href) {
+    const isExternal = href.startsWith('http');
     return (
-      <a href={href} className={allClasses}>
+      <a
+        href={href}
+        className={allClasses}
+        {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      >
         {children}
       </a>
     );

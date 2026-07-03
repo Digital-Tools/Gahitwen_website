@@ -1,4 +1,6 @@
-import { Helmet } from 'react-helmet-async';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import Seo from '../components/ui/Seo';
 import { motion } from 'framer-motion';
 import SectionHeading from '../components/ui/SectionHeading';
 import ProductDetail from '../components/products/ProductDetail';
@@ -52,7 +54,7 @@ const products = [
   {
     id: 'gfleet',
     title: 'GFleet',
-    tagline: 'Web dashboard for fleet owners monitor vehicles & integrate with Gahitwen.',
+    tagline: 'Web dashboard for fleet owners to monitor vehicles & integrate with Gahitwen.',
     description: 'GFleet provides fleet owners with a comprehensive web dashboard to monitor and manage their entire vehicle fleet. From maintenance scheduling to driver performance, GFleet delivers the insights needed to optimize operations and reduce costs.',
     features: [
       'Real-time vehicle tracking and monitoring',
@@ -67,12 +69,24 @@ const products = [
 ];
 
 const Products = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.hash) return;
+    const id = location.hash.slice(1);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [location]);
+
   return (
     <>
-      <Helmet>
-        <title>Products | The Gahitwen LLC</title>
-        <meta name="description" content="Explore The Gahitwen LLC's innovative product suite including Risiti, Smart-Taka, Gahitwen Logistics, and GFleet." />
-      </Helmet>
+      <Seo
+        title="Products"
+        description="Explore The Gahitwen LLC's innovative product suite including Risiti, Smart-Taka, Gahitwen Logistics, and GFleet."
+        path="/products"
+      />
       
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
@@ -97,7 +111,7 @@ const Products = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <ProductDetail {...product} />
+                <ProductDetail id={product.id} {...product} />
               </motion.div>
             ))}
           </div>

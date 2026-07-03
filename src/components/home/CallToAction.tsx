@@ -36,11 +36,11 @@ const CallToAction = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-col sm:flex-row justify-center gap-4"
           >
-            <Button to="/contact" variant="primary" size="lg">
-              Contact Us
+            <Button to="/quote" variant="primary" size="lg">
+              Get a Quote
             </Button>
-            <Button to="/products" variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-brown-900">
-              Explore Products
+            <Button to="/contact" variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-brown-900">
+              Contact Us
             </Button>
           </motion.div>
         </div>

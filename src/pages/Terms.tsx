@@ -1,13 +1,14 @@
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/ui/Seo';
 import { motion } from 'framer-motion';
 
 const Terms = () => {
   return (
     <>
-      <Helmet>
-        <title>Terms of Service | The Gahitwen LLC</title>
-        <meta name="description" content="The Gahitwen LLC's terms of service outline the rules, guidelines, and legal agreements between you and our company." />
-      </Helmet>
+      <Seo
+        title="Terms of Service"
+        description="The Gahitwen LLC's terms of service outline the rules, guidelines, and legal agreements between you and our company."
+        path="/terms"
+      />
       
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-4xl">
@@ -18,7 +19,7 @@ const Terms = () => {
           >
             <h1 className="text-3xl md:text-4xl font-bold text-brown-900 mb-8 text-center">Terms of Service</h1>
             
-            <div className="bg-white rounded-lg shadow-md p-6 md:p-8 prose prose-lg max-w-none">
+            <div className="bg-white rounded-lg shadow-md p-6 md:p-8 max-w-none">
               <p className="text-gray-600 mb-6">
                 Last Updated: June 15, 2025
               </p>

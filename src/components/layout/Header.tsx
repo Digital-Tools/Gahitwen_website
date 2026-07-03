@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import Logo from '../ui/Logo';
 
@@ -14,7 +14,7 @@ const Header = () => {
     setIsOpen(false);
   };
 
-  const headerClasses = "fixed w-full z-50 transition-all duration-300 py-4 bg-white shadow-md py-2";
+  const headerClasses = "fixed w-full z-50 transition-all duration-300 py-3 bg-white shadow-md";
 
   const linkClasses = ({ isActive }: { isActive: boolean }) => `
     relative font-medium text-base transition-colors duration-200
@@ -34,20 +34,27 @@ const Header = () => {
           </div>
 
           {/* Desktop navigation */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex items-center space-x-8">
             <NavLink to="/" className={linkClasses}>Home</NavLink>
             <NavLink to="/products" className={linkClasses}>Products</NavLink>
             <NavLink to="/services" className={linkClasses}>Services</NavLink>
             {/*<NavLink to="/team" className={linkClasses}>Team</NavLink>*/}
             <NavLink to="/contact" className={linkClasses}>Contact</NavLink>
+            <Link
+              to="/quote"
+              className="inline-flex items-center justify-center font-medium rounded-md transition-all duration-200 bg-yellow-500 text-brown-900 hover:bg-yellow-600 text-sm px-4 py-2"
+            >
+              Get a Quote
+            </Link>
           </nav>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button 
               onClick={toggleMenu}
-              className="p-2 rounded-md text-brown-800 hover:text-brown-900 focus:outline-none"
+              className="p-2 rounded-md text-brown-800 hover:text-brown-900 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               aria-expanded={isOpen}
+              aria-controls="mobile-nav"
             >
               <span className="sr-only">{isOpen ? 'Close menu' : 'Open menu'}</span>
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -58,6 +65,7 @@ const Header = () => {
 
       {/* Mobile navigation */}
       <div 
+        id="mobile-nav"
         className={`
           md:hidden fixed inset-0 z-40 bg-white transform transition-transform duration-300 ease-in-out 
           ${isOpen ? 'translate-x-0' : 'translate-x-full'}
@@ -100,6 +108,13 @@ const Header = () => {
           >
             Contact
           </NavLink>
+          <Link
+            to="/quote"
+            onClick={closeMenu}
+            className="inline-flex items-center justify-center font-medium rounded-md bg-yellow-500 text-brown-900 hover:bg-yellow-600 text-lg px-6 py-3 mt-2"
+          >
+            Get a Quote
+          </Link>
         </div>
       </div>
     </header>

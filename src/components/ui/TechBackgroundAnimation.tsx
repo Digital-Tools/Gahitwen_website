@@ -16,17 +16,14 @@ import {
 } from 'lucide-react';
 
 const TechBackgroundAnimation = () => {
-    // Create raw motion values (won't trigger React renders) :contentReference[oaicite:0]{index=0}
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
-    // Smooth them with springs for natural movement :contentReference[oaicite:1]{index=1}
     const springX = useSpring(mouseX, { stiffness: 100, damping: 30 });
     const springY = useSpring(mouseY, { stiffness: 100, damping: 30 });
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
-            // Update motion values directly—no React state, no re-render :contentReference[oaicite:2]{index=2}
             mouseX.set(e.clientX);
             mouseY.set(e.clientY);
         };
@@ -54,7 +51,7 @@ const TechBackgroundAnimation = () => {
         id: i,
         x: 5 + (i % 4) * 30,
         y: 20 + Math.floor(i / 4) * 30,
-        size: 5 + Math.random() * 4,
+        size: 5 + (i % 4),
         delay: i * 0.2,
         iconIndex: i % techIcons.length
     }));

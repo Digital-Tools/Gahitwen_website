@@ -1,7 +1,8 @@
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/ui/Seo';
 import { motion } from 'framer-motion';
 import SectionHeading from '../components/ui/SectionHeading';
 import TeamMember from '../components/team/TeamMember';
+import Button from '../components/ui/Button';
 
 const teamMembers = [
   {
@@ -60,10 +61,11 @@ const teamMembers = [
 const Team = () => {
   return (
     <>
-      <Helmet>
-        <title>Our Team | The Gahitwen LLC</title>
-        <meta name="description" content="Meet the talented team behind The Gahitwen LLC's innovative technology solutions and services." />
-      </Helmet>
+      <Seo
+        title="Our Team"
+        description="Meet the talented team behind The Gahitwen LLC's innovative technology solutions and services."
+        path="/team"
+      />
       
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
@@ -106,12 +108,9 @@ const Team = () => {
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <a 
-                href="#" 
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-brown-800 hover:bg-brown-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brown-500"
-              >
+              <Button to="/contact" size="lg">
                 View Open Positions
-              </a>
+              </Button>
             </motion.div>
           </div>
         </div>

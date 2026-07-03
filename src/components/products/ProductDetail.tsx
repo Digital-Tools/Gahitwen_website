@@ -14,6 +14,7 @@ type ProductDetailProps = {
 };
 
 const ProductDetail = ({
+  id,
   title,
   tagline,
   description,
@@ -24,7 +25,7 @@ const ProductDetail = ({
   appStoreUrl,
 }: ProductDetailProps) => {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md h-full flex flex-col">
+    <div id={id} className="bg-white p-6 rounded-lg shadow-md h-full flex flex-col scroll-mt-32">
       <h3 className="text-xl font-bold text-brown-900 mb-2">{title}</h3>
       <p className="text-yellow-600 font-medium mb-3">{tagline}</p>
       <p className="text-gray-600 mb-4 flex-grow">{description}</p>

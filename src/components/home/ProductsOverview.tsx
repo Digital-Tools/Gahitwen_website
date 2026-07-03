@@ -34,7 +34,7 @@ const products = [
   {
     id: 'gfleet',
     name: 'GFleet',
-    description: 'Web dashboard for fleet owners monitor vehicles & integrate with Gahitwen.',
+    description: 'Web dashboard for fleet owners to monitor vehicles & integrate with Gahitwen.',
     icon: LocateFixedIcon,
     color: 'bg-blue-500',
   }

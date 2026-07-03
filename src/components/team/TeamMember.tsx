@@ -12,6 +12,9 @@ type TeamMemberProps = {
 };
 
 const TeamMember = ({ name, title, bio, imageUrl, linkedin, twitter }: TeamMemberProps) => {
+  const linkedinUrl = linkedin && linkedin !== '#' ? linkedin : undefined;
+  const twitterUrl = twitter && twitter !== '#' ? twitter : undefined;
+
   return (
     <Card className="overflow-hidden h-full">
       <div className="relative h-64 overflow-hidden">
@@ -27,11 +30,11 @@ const TeamMember = ({ name, title, bio, imageUrl, linkedin, twitter }: TeamMembe
         <p className="text-yellow-600 font-medium mb-3">{title}</p>
         <p className="text-gray-600 mb-4">{bio}</p>
         
-        {(linkedin || twitter) && (
+        {(linkedinUrl || twitterUrl) && (
           <div className="flex space-x-3">
-            {linkedin && (
+            {linkedinUrl && (
               <a 
-                href={linkedin} 
+                href={linkedinUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-600 hover:text-brown-900 transition-colors"
@@ -40,9 +43,9 @@ const TeamMember = ({ name, title, bio, imageUrl, linkedin, twitter }: TeamMembe
                 <span className="sr-only">LinkedIn</span>
               </a>
             )}
-            {twitter && (
+            {twitterUrl && (
               <a 
-                href={twitter} 
+                href={twitterUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-600 hover:text-brown-900 transition-colors"
