@@ -2,7 +2,7 @@
 //
 // Responsibilities:
 //   1. Validate the incoming request.
-//   2. Verify the reCAPTCHA v3 token server-side (if configured).
+//   2. Verify the Cloudflare Turnstile token server-side (if configured).
 //   3. Recompute the AUTHORITATIVE estimate using the shared rate engine
 //      (clients can tamper with their copy — the server is the source of truth).
 //   4. Generate a ticket reference.
@@ -49,7 +49,7 @@ interface QuotePayload {
   regionId?: string;
   additionalServiceIds?: string[];
   contact?: ContactPayload;
-  recaptchaToken?: string;
+  turnstileToken?: string;
 }
 
 const json = (statusCode: number, body: unknown) => ({
@@ -67,28 +67,28 @@ const makeTicketRef = (): string => {
   return `GHT-${ymd}-${rand}`;
 };
 
-const verifyRecaptcha = async (token: string | undefined): Promise<boolean> => {
-  const secret = env.RECAPTCHA_SECRET;
+const verifyTurnstile = async (token: string | undefined): Promise<boolean> => {
+  const secret = env.TURNSTILE_SECRET_KEY;
   // If no secret is configured, skip verification (e.g. local dev) but warn.
   if (!secret) {
-    console.warn('[submit-quote] RECAPTCHA_SECRET not set — skipping verification.');
+    console.warn('[submit-quote] TURNSTILE_SECRET_KEY not set — skipping verification.');
     return true;
   }
   if (!token) return false;
 
   try {
-    const res = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+    const formData = new URLSearchParams();
+    formData.append('secret', secret);
+    formData.append('response', token);
+
+    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `secret=${encodeURIComponent(secret)}&response=${encodeURIComponent(token)}`,
+      body: formData,
     });
-    const data = (await res.json()) as { success?: boolean; score?: number };
-    if (!data.success) return false;
-    // v3 returns a score; treat >= 0.5 as human.
-    if (typeof data.score === 'number') return data.score >= 0.5;
-    return true;
+    const data = (await res.json()) as { success?: boolean };
+    return data.success === true;
   } catch (err) {
-    console.error('[submit-quote] reCAPTCHA verification failed:', err);
+    console.error('[submit-quote] Turnstile verification failed:', err);
     return false;
   }
 };
@@ -650,8 +650,8 @@ export const handler = async (event: {
     return json(400, { error: 'Invalid region selected.' });
   }
 
-  // --- reCAPTCHA ---
-  const human = await verifyRecaptcha(payload.recaptchaToken);
+  // --- Turnstile ---
+  const human = await verifyTurnstile(payload.turnstileToken);
   if (!human) {
     return json(403, { error: 'Verification failed. Please try again.' });
   }
