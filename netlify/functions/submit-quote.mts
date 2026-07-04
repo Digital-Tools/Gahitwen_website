@@ -2,7 +2,7 @@
 //
 // Responsibilities:
 //   1. Validate the incoming request.
-//   2. Verify the reCAPTCHA v3 token server-side (if configured).
+//   2. Verify the Cloudflare Turnstile token server-side (if configured).
 //   3. Recompute the AUTHORITATIVE estimate using the shared rate engine
 //      (clients can tamper with their copy — the server is the source of truth).
 //   4. Generate a ticket reference.
@@ -49,7 +49,7 @@ interface QuotePayload {
   regionId?: string;
   additionalServiceIds?: string[];
   contact?: ContactPayload;
-  recaptchaToken?: string;
+  turnstileToken?: string;
   /** Milliseconds since the form was first rendered (anti-bot timing). */
   formStartedAt?: number;
   /** Honeypot — must stay empty; bots often auto-fill hidden fields. */
@@ -74,46 +74,36 @@ const makeTicketRef = (): string => {
 const isProduction =
   env.CONTEXT === 'production' || env.NODE_ENV === 'production';
 
-const recaptchaMinScore = (): number => {
-  const configured = Number(env.RECAPTCHA_MIN_SCORE);
-  return Number.isFinite(configured) && configured > 0 && configured <= 1
-    ? configured
-    : 0.7;
-};
-
-const verifyRecaptcha = async (token: string | undefined): Promise<boolean> => {
-  const secret = env.RECAPTCHA_SECRET;
+const verifyTurnstile = async (token: string | undefined): Promise<boolean> => {
+  const secret = env.TURNSTILE_SECRET_KEY;
   if (!secret) {
     if (isProduction) {
       console.error(
-        '[submit-quote] RECAPTCHA_SECRET not set in production — rejecting submission.'
+        '[submit-quote] TURNSTILE_SECRET_KEY not set in production — rejecting submission.'
       );
       return false;
     }
-    console.warn('[submit-quote] RECAPTCHA_SECRET not set — skipping verification.');
+    console.warn('[submit-quote] TURNSTILE_SECRET_KEY not set — skipping verification.');
     return true;
   }
   if (!token) return false;
 
   try {
-    const res = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+    const formData = new URLSearchParams();
+    formData.append('secret', secret);
+    formData.append('response', token);
+
+    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `secret=${encodeURIComponent(secret)}&response=${encodeURIComponent(token)}`,
+      body: formData,
     });
     const data = (await res.json()) as {
       success?: boolean;
-      score?: number;
-      action?: string;
       hostname?: string;
       'error-codes'?: string[];
     };
     if (!data.success) {
-      console.warn('[submit-quote] reCAPTCHA rejected:', data['error-codes']);
-      return false;
-    }
-    if (data.action && data.action !== 'submit_quote') {
-      console.warn('[submit-quote] reCAPTCHA action mismatch:', data.action);
+      console.warn('[submit-quote] Turnstile rejected:', data['error-codes']);
       return false;
     }
     if (
@@ -121,17 +111,12 @@ const verifyRecaptcha = async (token: string | undefined): Promise<boolean> => {
       !data.hostname.endsWith('gahitwen.com') &&
       data.hostname !== 'localhost'
     ) {
-      console.warn('[submit-quote] reCAPTCHA hostname mismatch:', data.hostname);
-      return false;
-    }
-    const minScore = recaptchaMinScore();
-    if (typeof data.score === 'number' && data.score < minScore) {
-      console.warn('[submit-quote] reCAPTCHA score too low:', data.score);
+      console.warn('[submit-quote] Turnstile hostname mismatch:', data.hostname);
       return false;
     }
     return true;
   } catch (err) {
-    console.error('[submit-quote] reCAPTCHA verification failed:', err);
+    console.error('[submit-quote] Turnstile verification failed:', err);
     return false;
   }
 };
@@ -745,7 +730,7 @@ export const handler = async (event: {
     return json(403, { error: 'Verification failed. Please try again.' });
   }
 
-  const human = await verifyRecaptcha(payload.recaptchaToken);
+  const human = await verifyTurnstile(payload.turnstileToken);
   if (!human) {
     return json(403, { error: 'Verification failed. Please try again.' });
   }
