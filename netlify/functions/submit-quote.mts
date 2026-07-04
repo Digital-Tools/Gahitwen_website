@@ -50,6 +50,10 @@ interface QuotePayload {
   additionalServiceIds?: string[];
   contact?: ContactPayload;
   recaptchaToken?: string;
+  /** Milliseconds since the form was first rendered (anti-bot timing). */
+  formStartedAt?: number;
+  /** Honeypot — must stay empty; bots often auto-fill hidden fields. */
+  companyWebsite?: string;
 }
 
 const json = (statusCode: number, body: unknown) => ({
@@ -67,10 +71,25 @@ const makeTicketRef = (): string => {
   return `GHT-${ymd}-${rand}`;
 };
 
+const isProduction =
+  env.CONTEXT === 'production' || env.NODE_ENV === 'production';
+
+const recaptchaMinScore = (): number => {
+  const configured = Number(env.RECAPTCHA_MIN_SCORE);
+  return Number.isFinite(configured) && configured > 0 && configured <= 1
+    ? configured
+    : 0.7;
+};
+
 const verifyRecaptcha = async (token: string | undefined): Promise<boolean> => {
   const secret = env.RECAPTCHA_SECRET;
-  // If no secret is configured, skip verification (e.g. local dev) but warn.
   if (!secret) {
+    if (isProduction) {
+      console.error(
+        '[submit-quote] RECAPTCHA_SECRET not set in production — rejecting submission.'
+      );
+      return false;
+    }
     console.warn('[submit-quote] RECAPTCHA_SECRET not set — skipping verification.');
     return true;
   }
@@ -82,15 +101,76 @@ const verifyRecaptcha = async (token: string | undefined): Promise<boolean> => {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `secret=${encodeURIComponent(secret)}&response=${encodeURIComponent(token)}`,
     });
-    const data = (await res.json()) as { success?: boolean; score?: number };
-    if (!data.success) return false;
-    // v3 returns a score; treat >= 0.5 as human.
-    if (typeof data.score === 'number') return data.score >= 0.5;
+    const data = (await res.json()) as {
+      success?: boolean;
+      score?: number;
+      action?: string;
+      hostname?: string;
+      'error-codes'?: string[];
+    };
+    if (!data.success) {
+      console.warn('[submit-quote] reCAPTCHA rejected:', data['error-codes']);
+      return false;
+    }
+    if (data.action && data.action !== 'submit_quote') {
+      console.warn('[submit-quote] reCAPTCHA action mismatch:', data.action);
+      return false;
+    }
+    if (
+      data.hostname &&
+      !data.hostname.endsWith('gahitwen.com') &&
+      data.hostname !== 'localhost'
+    ) {
+      console.warn('[submit-quote] reCAPTCHA hostname mismatch:', data.hostname);
+      return false;
+    }
+    const minScore = recaptchaMinScore();
+    if (typeof data.score === 'number' && data.score < minScore) {
+      console.warn('[submit-quote] reCAPTCHA score too low:', data.score);
+      return false;
+    }
     return true;
   } catch (err) {
     console.error('[submit-quote] reCAPTCHA verification failed:', err);
     return false;
   }
+};
+
+const MIN_FORM_SECONDS = 4;
+
+const isTooFast = (formStartedAt: number | undefined): boolean => {
+  if (!formStartedAt || !Number.isFinite(formStartedAt)) return true;
+  const elapsedMs = Date.now() - formStartedAt;
+  return elapsedMs < MIN_FORM_SECONDS * 1000;
+};
+
+const URL_RE = /https?:\/\/|www\./gi;
+
+const looksLikeSpam = (contact: ContactPayload): string | null => {
+  const message = (contact.message ?? '').trim();
+  const name = (contact.name ?? '').trim();
+  const email = (contact.email ?? '').trim().toLowerCase();
+
+  if (message.length < 12) return 'message too short';
+  if (name.length < 2) return 'invalid name';
+
+  const urlMatches = message.match(URL_RE);
+  if (urlMatches && urlMatches.length >= 2) return 'too many links';
+
+  const disposableDomains = [
+    'mailinator.com',
+    'guerrillamail.com',
+    'tempmail.com',
+    'yopmail.com',
+    '10minutemail.com',
+    'trashmail.com',
+  ];
+  const emailDomain = email.split('@')[1];
+  if (emailDomain && disposableDomains.some((d) => emailDomain === d || emailDomain.endsWith(`.${d}`))) {
+    return 'disposable email';
+  }
+
+  return null;
 };
 
 const estimateLine = (e: Estimate): string => {
@@ -650,7 +730,21 @@ export const handler = async (event: {
     return json(400, { error: 'Invalid region selected.' });
   }
 
-  // --- reCAPTCHA ---
+  // --- Bot / spam checks ---
+  if (payload.companyWebsite?.trim()) {
+    console.warn('[submit-quote] Honeypot triggered');
+    return json(403, { error: 'Verification failed. Please try again.' });
+  }
+  if (isTooFast(payload.formStartedAt)) {
+    console.warn('[submit-quote] Form submitted too quickly');
+    return json(403, { error: 'Verification failed. Please try again.' });
+  }
+  const spamReason = looksLikeSpam(contact);
+  if (spamReason) {
+    console.warn('[submit-quote] Spam heuristic:', spamReason);
+    return json(403, { error: 'Verification failed. Please try again.' });
+  }
+
   const human = await verifyRecaptcha(payload.recaptchaToken);
   if (!human) {
     return json(403, { error: 'Verification failed. Please try again.' });

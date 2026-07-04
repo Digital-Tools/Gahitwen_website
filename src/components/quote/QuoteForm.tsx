@@ -1,9 +1,9 @@
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Loader2, Send, CheckCircle2, Copy } from 'lucide-react';
 import {
-  GoogleReCaptcha,
   GoogleReCaptchaProvider,
+  useGoogleReCaptcha,
 } from 'react-google-recaptcha-v3';
 import Button from '../ui/Button';
 import {
@@ -25,7 +25,9 @@ const inputClasses =
   'block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500';
 const labelClasses = 'block text-sm font-medium text-gray-700 mb-1';
 
-const QuoteForm = () => {
+const QuoteFormInner = () => {
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const formStartedAt = useRef(Date.now());
   const [searchParams] = useSearchParams();
   const presetService = searchParams.get('service') ?? '';
 
@@ -50,8 +52,7 @@ const QuoteForm = () => {
     message: '',
   });
 
-  const [recaptchaToken, setRecaptchaToken] = useState('');
-  const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
+  const [companyWebsite, setCompanyWebsite] = useState('');
   const [submitState, setSubmitState] = useState<SubmitState>('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [success, setSuccess] = useState<SuccessPayload | null>(null);
@@ -74,10 +75,6 @@ const QuoteForm = () => {
         : scopes[1]?.id ?? scopes[0]?.id ?? '',
     [scopes, scopeId]
   );
-
-  const onVerify = useCallback((token: string) => {
-    setRecaptchaToken(token);
-  }, []);
 
   const handleContactChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -107,7 +104,7 @@ const QuoteForm = () => {
     e.preventDefault();
     setErrorMsg('');
 
-    if (!recaptchaToken) {
+    if (!executeRecaptcha) {
       setErrorMsg('Please wait a moment for verification to complete, then try again.');
       return;
     }
@@ -115,6 +112,11 @@ const QuoteForm = () => {
     setSubmitState('submitting');
 
     try {
+      const recaptchaToken = await executeRecaptcha('submit_quote');
+      if (!recaptchaToken) {
+        throw new Error('Verification failed. Please try again.');
+      }
+
       const res = await fetch('/api/submit-quote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -125,6 +127,8 @@ const QuoteForm = () => {
           additionalServiceIds,
           contact,
           recaptchaToken,
+          formStartedAt: formStartedAt.current,
+          companyWebsite,
         }),
       });
 
@@ -138,9 +142,8 @@ const QuoteForm = () => {
         ticketRef: data.ticketRef,
       });
       setSubmitState('success');
-      setRefreshReCaptcha((prev) => !prev);
     } catch (err) {
-      setSubmitState('error');
+      setSubmitState('idle');
       setErrorMsg(
         err instanceof Error
           ? err.message
@@ -185,10 +188,8 @@ const QuoteForm = () => {
   }
 
   return (
-    <GoogleReCaptchaProvider reCaptchaKey={import.meta.env.VITE_RECAPTCHA_KEY}>
-      <div className="max-w-3xl mx-auto">
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-8">
+    <div className="max-w-3xl mx-auto">
+      <form onSubmit={handleSubmit} className="space-y-8">
           {/* Service & scope */}
           <fieldset className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 md:p-8">
             <legend className="text-lg font-bold text-brown-900 px-2">
@@ -359,10 +360,22 @@ const QuoteForm = () => {
               </div>
             </div>
 
-            <GoogleReCaptcha onVerify={onVerify} refreshReCaptcha={refreshReCaptcha} />
+            {/* Honeypot — hidden from humans, often filled by bots */}
+            <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+              <label htmlFor="companyWebsite">Company website</label>
+              <input
+                id="companyWebsite"
+                name="companyWebsite"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={companyWebsite}
+                onChange={(e) => setCompanyWebsite(e.target.value)}
+              />
+            </div>
 
             <div className="mt-6">
-              <Button type="submit" disabled={submitState === 'submitting' || !recaptchaToken} className="w-full flex items-center justify-center">
+              <Button type="submit" disabled={submitState === 'submitting'} className="w-full flex items-center justify-center">
                 {submitState === 'submitting' ? (
                   <>
                     <Loader2 size={20} className="mr-2 animate-spin" /> Sending request...
@@ -386,10 +399,15 @@ const QuoteForm = () => {
             Our team reviews the full scope of your request and emails you a
             tailored estimate — no automated pricing is shown here.
           </p>
-        </form>
-      </div>
-    </GoogleReCaptchaProvider>
+      </form>
+    </div>
   );
 };
+
+const QuoteForm = () => (
+  <GoogleReCaptchaProvider reCaptchaKey={import.meta.env.VITE_RECAPTCHA_KEY}>
+    <QuoteFormInner />
+  </GoogleReCaptchaProvider>
+);
 
 export default QuoteForm;
