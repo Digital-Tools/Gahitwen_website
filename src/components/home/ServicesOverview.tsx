@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { 
   Code, 
   Cloud, 
@@ -44,33 +45,40 @@ const services = [
 
 const ServicesOverview = () => {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="container mx-auto">
         <SectionHeading
           title="Our Services"
+          eyebrow="What we do"
           subtitle="We provide comprehensive technology solutions to help businesses innovate and grow."
           centered
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mt-8">
           {services.map((service, index) => (
             <motion.div 
               key={service.id}
-              className="flex"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <div className="flex-shrink-0 mr-4">
-                <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center text-yellow-600">
-                  <service.icon size={24} />
+              <Link
+                to={`/services#${service.id}`}
+                className="flex rounded-lg p-3 -m-3 transition-colors duration-200 hover:bg-brown-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500"
+              >
+                <div className="flex-shrink-0 mr-4">
+                  <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center text-yellow-600">
+                    <service.icon size={24} />
+                  </div>
                 </div>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-brown-900 mb-2">{service.name}</h3>
-                <p className="text-gray-600">{service.description}</p>
-              </div>
+                <div>
+                  <h3 className="text-xl font-bold text-brown-900 mb-2 group-hover:text-brown-800">
+                    {service.name}
+                  </h3>
+                  <p className="text-gray-600">{service.description}</p>
+                </div>
+              </Link>
             </motion.div>
           ))}
         </div>

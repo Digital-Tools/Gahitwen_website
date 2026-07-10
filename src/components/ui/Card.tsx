@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { motion } from 'framer-motion';
 
 type CardProps = {
   children: ReactNode;
@@ -8,13 +7,11 @@ type CardProps = {
 
 const Card = ({ children, className = '' }: CardProps) => {
   return (
-    <motion.div
-      className={`bg-white rounded-lg shadow-md overflow-hidden ${className}`}
-      whileHover={{ y: -5 }}
-      transition={{ type: "spring", stiffness: 300 }}
+    <div
+      className={`bg-white rounded-lg border border-brown-100 shadow-sm overflow-hidden transition-shadow duration-200 hover:shadow-md ${className}`}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 

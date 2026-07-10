@@ -214,12 +214,7 @@ const Products = () => {
               <Button to="/quote" variant="primary" size="md">
                 Get a Quote
               </Button>
-              <Button
-                to="/contact"
-                variant="outline"
-                size="md"
-                className="border-white text-white hover:bg-white hover:text-brown-900"
-              >
+              <Button to="/contact" variant="outlineOnDark" size="md">
                 Talk to the Team
               </Button>
             </div>

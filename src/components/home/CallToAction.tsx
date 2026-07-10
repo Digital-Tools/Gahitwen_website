@@ -3,9 +3,9 @@ import Button from "../ui/Button";
 
 const CallToAction = () => {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-brown-900 text-white relative overflow-hidden">
-      {/* Yellow accent shape */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-yellow-500 opacity-10 skew-x-12"></div>
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-brown-900 to-brown-800 text-white relative overflow-hidden">
+      {/* Thin gold accent */}
+      <div className="absolute top-0 inset-x-0 h-0.5 bg-yellow-500" aria-hidden="true" />
 
       <div className="container mx-auto relative z-10">
         <div className="max-w-3xl mx-auto text-center">
@@ -41,12 +41,7 @@ const CallToAction = () => {
             <Button to="/quote" variant="primary" size="lg">
               Get a Quote
             </Button>
-            <Button
-              to="/contact"
-              variant="outline"
-              size="lg"
-              className="border-white text-white hover:bg-white hover:text-brown-900"
-            >
+            <Button to="/contact" variant="outlineOnDark" size="lg">
               Talk to the Team
             </Button>
           </motion.div>

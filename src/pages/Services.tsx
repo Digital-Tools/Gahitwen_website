@@ -161,6 +161,8 @@ const Services = () => {
             {services.map((service, index) => (
               <motion.div
                 key={service.id}
+                id={service.id}
+                className="scroll-mt-24"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -231,12 +233,7 @@ const Services = () => {
             <Button to="/quote" size="lg">
               Get a Quote
             </Button>
-            <Button
-              to="/contact"
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-brown-900"
-            >
+            <Button to="/contact" size="lg" variant="outlineOnDark">
               Talk to a Security Expert
             </Button>
           </div>

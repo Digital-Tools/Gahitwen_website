@@ -73,6 +73,7 @@ const ProductsOverview = () => {
       <div className="container mx-auto">
         <SectionHeading
           title="What We've Shipped"
+          eyebrow="Products"
           subtitle="Live products, real users, meaningful complexity — built by a team you can actually talk to."
           centered
         />

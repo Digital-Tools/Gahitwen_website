@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
-type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'text';
+type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'outlineOnDark' | 'text';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 type ButtonProps = {
@@ -24,13 +24,20 @@ const Button = ({
   onClick,
   ...props
 }: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
-  const baseClasses = 'inline-flex items-center justify-center font-medium rounded-md transition-all duration-200 focus:outline-none';
+  const baseClasses =
+    'inline-flex items-center justify-center font-medium rounded-md transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2';
   
   const variantClasses = {
-    primary: 'bg-yellow-500 text-brown-900 hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50',
-    secondary: 'bg-brown-800 text-white hover:bg-brown-900 focus:ring-2 focus:ring-brown-800 focus:ring-opacity-50',
-    outline: 'bg-transparent border-2 border-yellow-500 text-brown-900 hover:bg-yellow-500 hover:text-brown-900 focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50',
-    text: 'bg-transparent text-brown-800 hover:text-brown-900 hover:bg-brown-50 focus:ring-2 focus:ring-brown-500 focus:ring-opacity-25',
+    primary:
+      'bg-yellow-500 text-brown-900 hover:bg-yellow-600 focus-visible:ring-yellow-500 focus-visible:ring-offset-white',
+    secondary:
+      'bg-brown-800 text-white hover:bg-brown-900 focus-visible:ring-brown-800 focus-visible:ring-offset-white',
+    outline:
+      'bg-transparent border-2 border-yellow-500 text-brown-900 hover:bg-yellow-500 hover:text-brown-900 focus-visible:ring-yellow-500 focus-visible:ring-offset-white',
+    outlineOnDark:
+      'bg-transparent border-2 border-white/80 text-white hover:bg-white hover:text-brown-900 hover:border-white focus-visible:ring-yellow-500 focus-visible:ring-offset-brown-900',
+    text:
+      'bg-transparent text-brown-800 hover:text-brown-900 hover:bg-brown-50 focus-visible:ring-brown-500 focus-visible:ring-offset-white',
   };
   
   const sizeClasses = {
@@ -43,7 +50,7 @@ const Button = ({
   
   if (to) {
     return (
-      <Link to={to} className={allClasses}>
+      <Link to={to} className={allClasses} onClick={onClick}>
         {children}
       </Link>
     );
@@ -55,6 +62,7 @@ const Button = ({
       <a
         href={href}
         className={allClasses}
+        onClick={onClick}
         {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       >
         {children}

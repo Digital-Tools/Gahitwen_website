@@ -1,5 +1,6 @@
 import Seo from "../components/ui/Seo";
 import Hero from "../components/home/Hero";
+import TrustStrip from "../components/home/TrustStrip";
 import ProductsOverview from "../components/home/ProductsOverview";
 import ServicesOverview from "../components/home/ServicesOverview";
 import CallToAction from "../components/home/CallToAction";
@@ -24,6 +25,7 @@ const Home = () => {
       />
 
       <Hero />
+      <TrustStrip />
       <ProductsOverview />
       <ServicesOverview />
       <CallToAction />
