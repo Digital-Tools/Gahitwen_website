@@ -152,6 +152,14 @@ const Footer = () => {
               </li>
               <li>
                 <NavLink
+                  to="/systems"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  Systems
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
                   to="/services"
                   className="text-gray-300 hover:text-white transition-colors"
                 >

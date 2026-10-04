@@ -84,6 +84,9 @@ const Header = () => {
             <NavLink to="/products" className={linkClasses}>
               Products
             </NavLink>
+            <NavLink to="/systems" className={linkClasses}>
+              Systems
+            </NavLink>
             <NavLink to="/services" className={linkClasses}>
               Services
             </NavLink>
@@ -137,6 +140,13 @@ const Header = () => {
               onClick={closeMenu}
             >
               Products
+            </NavLink>
+            <NavLink
+              to="/systems"
+              className={mobileLinkClasses}
+              onClick={closeMenu}
+            >
+              Systems
             </NavLink>
             <NavLink
               to="/services"

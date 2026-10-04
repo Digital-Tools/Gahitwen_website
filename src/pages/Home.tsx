@@ -3,6 +3,7 @@ import Hero from "../components/home/Hero";
 import TrustStrip from "../components/home/TrustStrip";
 import ProductsOverview from "../components/home/ProductsOverview";
 import ServicesOverview from "../components/home/ServicesOverview";
+import ClientWork from "../components/home/ClientWork";
 import CallToAction from "../components/home/CallToAction";
 import { organizationSchema } from "../lib/structuredData";
 
@@ -19,6 +20,8 @@ const Home = () => {
           "cybersecurity",
           "cloud security",
           "logistics software",
+          "client software development",
+          "custom enterprise systems",
           "The Gahitwen LLC",
         ]}
         jsonLd={organizationSchema}
@@ -27,6 +30,7 @@ const Home = () => {
       <Hero />
       <TrustStrip />
       <ProductsOverview />
+      <ClientWork />
       <ServicesOverview />
       <CallToAction />
     </>
