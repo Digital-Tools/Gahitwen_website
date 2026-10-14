@@ -7,7 +7,16 @@ export type ClientSystem = {
   points: string[];
 };
 
-export const systems: ClientSystem[] = [
+export type CapabilitySystem = {
+  id: string;
+  title: string;
+  category: string;
+  capability: string;
+  description: string;
+  points: string[];
+};
+
+export const clientSystems: ClientSystem[] = [
   {
     id: "isamu-sales-portal",
     title: "Isamu Sales Portal",
@@ -91,6 +100,74 @@ export const systems: ClientSystem[] = [
       "Structured daily evaluation grids with typed or voice comments",
       "AI synthesis into a clear three-paragraph recommendation",
       "Branded PDF reports that match the client's exact template",
+    ],
+  },
+];
+
+export const capabilitySystems: CapabilitySystem[] = [
+  {
+    id: "semantic-video-search",
+    title: "Semantic Video Search",
+    category: "Video Technology",
+    capability: "Searchable video content & transcripts",
+    description:
+      "A video indexing and search system that makes large video libraries searchable beyond titles and tags — letting users find relevant videos by searching for words and phrases spoken within the recordings.",
+    points: [
+      "Indexes video metadata — titles, tags, descriptions and creation dates",
+      "Makes spoken words and phrases searchable within video content",
+      "Combines metadata and transcript indexing to improve video discovery",
+    ],
+  },
+  {
+    id: "drawing-metadata-extractor",
+    title: "Drawing Metadata Extractor",
+    category: "Engineering & Construction",
+    capability: "AI-powered document data extraction",
+    description:
+      "A desktop document-processing system that extracts title-block information from architectural and engineering drawings in PDF and image formats, then populates a cloud database automatically.",
+    points: [
+      "Detects title blocks across drawings with different layouts, positions and orientations",
+      "Extracts drawing metadata — titles, authors, scales, versions and dates",
+      "Automatically transfers extracted information into a centralized cloud database",
+    ],
+  },
+  {
+    id: "destination-discovery-engine",
+    title: "Destination Discovery Engine",
+    category: "Travel Technology",
+    capability: "Location-based travel discovery",
+    description:
+      "A destination discovery platform that helps travellers explore places worth visiting in any searched location — collecting and organising destination information from across the web into a mobile-friendly experience.",
+    points: [
+      "Discovers attractions and destinations associated with a searched location",
+      "Aggregates destination names, addresses, images, headings and descriptions",
+      "Delivers rich destination listings to help travellers find places to visit",
+    ],
+  },
+  {
+    id: "support-knowledge-extractor",
+    title: "Support Knowledge Extractor",
+    category: "Human Resource",
+    capability: "AI-powered support knowledge management",
+    description:
+      "An intelligent knowledge-extraction system that turns millions of customer-support email threads into a structured FAQ knowledge base — helping support teams capture recurring questions and publish clear answers.",
+    points: [
+      "Processes large volumes of email conversations to identify frequent questions",
+      "Extracts and consolidates recurring questions from back-and-forth threads",
+      "Produces structured FAQ content ready for publication on the website",
+    ],
+  },
+  {
+    id: "medical-claims-automation",
+    title: "Intelligent Medical Claims Automation",
+    category: "Healthcare Technology",
+    capability: "AI-powered healthcare revenue cycle automation",
+    description:
+      "An automated medical claims pipeline that connects patient screening, medical coding, claim creation and claim submission into one coordinated workflow — reducing manual processing across the revenue cycle.",
+    points: [
+      "Automates patient screening and eligibility-related workflow steps",
+      "Integrates medical coding and claim generation into the pipeline",
+      "Coordinates claim submission through an end-to-end automated workflow",
     ],
   },
 ];

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import Card from "../ui/Card";
-import { systems } from "../../lib/systems";
+import { clientSystems } from "../../lib/systems";
 
 const container = {
   hidden: { opacity: 0 },
@@ -27,7 +27,7 @@ const SystemsGrid = () => {
       whileInView="show"
       viewport={{ once: true, amount: 0.1 }}
     >
-      {systems.map((system) => (
+      {clientSystems.map((system) => (
         <motion.div key={system.id} variants={item}>
           <Card className="h-full flex flex-col">
             <div className="p-6 flex flex-col flex-grow">

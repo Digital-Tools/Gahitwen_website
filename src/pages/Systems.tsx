@@ -1,20 +1,24 @@
 import { motion } from "framer-motion";
 import Seo from "../components/ui/Seo";
 import Button from "../components/ui/Button";
+import SectionHeading from "../components/ui/SectionHeading";
 import SystemsGrid from "../components/systems/SystemsGrid";
+import CapabilitySystemsGrid from "../components/systems/CapabilitySystemsGrid";
 
 const Systems = () => {
   return (
     <>
       <Seo
         title="Systems"
-        description="A selection of production systems we designed and shipped for our clients — from sales and membership platforms to AI-powered operations, compliance and evaluation tools."
+        description="Production systems and AI capabilities we designed and shipped — from client platforms spanning sales, membership, operations and compliance to standalone AI and data systems."
         path="/systems"
         keywords={[
           "client systems",
           "custom software",
           "enterprise platform",
           "workflow software",
+          "AI systems",
+          "document AI",
           "The Gahitwen LLC",
         ]}
       />
@@ -29,24 +33,42 @@ const Systems = () => {
             className="text-center max-w-2xl mx-auto"
           >
             <p className="inline-block text-yellow-500 text-xs font-semibold uppercase tracking-[0.2em] mb-3">
-              Selected Client Work
+              What We Build
             </p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">
-              Systems We've Built for Clients
+              Systems We've Built
             </h1>
             <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
-              A selection of production systems we designed and shipped — from
-              sales and membership platforms to AI-powered operations,
-              compliance and evaluation tools.
+              Production platforms and AI systems we designed and shipped — from
+              client platforms to standalone engineering builds.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Systems grid */}
+      {/* Client systems */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="container mx-auto">
+          <SectionHeading
+            eyebrow="Client Systems"
+            title="Platforms Built for Clients"
+            subtitle="Production software we designed and shipped for our clients."
+            centered
+          />
           <SystemsGrid />
+        </div>
+      </section>
+
+      {/* Capability systems */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="container mx-auto">
+          <SectionHeading
+            eyebrow="Capability Showcase"
+            title="AI & Data Systems We've Engineered"
+            subtitle="Standalone systems we've built to solve specific, technical problems."
+            centered
+          />
+          <CapabilitySystemsGrid />
         </div>
       </section>
 
