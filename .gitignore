@@ -30,3 +30,6 @@ dist-ssr
 
 # Local Cursor folder (personal notes / account info)
 .cursor/
+
+# Local working docs (not for the public repo)
+Project Summaries.md
