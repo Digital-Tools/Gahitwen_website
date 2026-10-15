@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Truck, Scale, ScanBarcode, Recycle, Handshake } from "lucide-react";
+import { Truck, Scale, ScanBarcode, Recycle, Handshake, Database } from "lucide-react";
 import Card from "../ui/Card";
 import SectionHeading from "../ui/SectionHeading";
 import Button from "../ui/Button";
@@ -13,6 +13,7 @@ const products = [
     icon: Truck,
     color: "bg-amber-500",
     builtFor: "marketplaces at scale",
+    to: "/products#gahitwen-logistics",
   },
   {
     id: "lawcap",
@@ -22,6 +23,7 @@ const products = [
     icon: Scale,
     color: "bg-indigo-500",
     builtFor: "verifiable AI",
+    to: "/products#lawcap",
   },
   {
     id: "risiti",
@@ -31,6 +33,7 @@ const products = [
     icon: ScanBarcode,
     color: "bg-purple-500",
     builtFor: "compliance AI",
+    to: "/products#risiti",
   },
   {
     id: "smart-taka",
@@ -40,6 +43,7 @@ const products = [
     icon: Recycle,
     color: "bg-green-500",
     builtFor: "informal industries",
+    to: "/products#smart-taka",
   },
   {
     id: "watheq",
@@ -49,6 +53,17 @@ const products = [
     icon: Handshake,
     color: "bg-emerald-500",
     builtFor: "peer-to-peer fintech",
+    to: "/products#watheq",
+  },
+  {
+    id: "dataops-drive",
+    name: "DataOps Drive",
+    description:
+      "Private AI over your whole archive — ChatGPT, Claude or Grok reading every document you've filed, scans included.",
+    icon: Database,
+    color: "bg-yellow-500",
+    builtFor: "private document AI",
+    to: "/products/dataops-drive",
   },
 ];
 
@@ -106,7 +121,7 @@ const ProductsOverview = () => {
                 </div>
                 <div className="px-6 pb-6">
                   <Button
-                    to={`/products#${product.id}`}
+                    to={product.to}
                     variant="outline"
                     size="sm"
                   >

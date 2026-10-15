@@ -2,6 +2,7 @@
 export const SITE_ROUTES = [
   { path: '/', changefreq: 'monthly', priority: '1.0' },
   { path: '/products', changefreq: 'monthly', priority: '0.9' },
+  { path: '/products/dataops-drive', changefreq: 'monthly', priority: '0.9' },
   { path: '/systems', changefreq: 'monthly', priority: '0.8' },
   { path: '/services', changefreq: 'monthly', priority: '0.8' },
   { path: '/quote', changefreq: 'monthly', priority: '0.9' },

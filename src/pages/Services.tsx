@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Seo from '../components/ui/Seo';
 import { motion } from 'framer-motion';
 import { 
@@ -174,6 +174,14 @@ const Services = () => {
                   </div>
                   <h3 className="text-2xl font-bold text-brown-900 mb-4">{service.title}</h3>
                   <p className="text-gray-600 mb-6 flex-grow">{service.description}</p>
+                  {service.id === 'data-analytics' && (
+                    <Link
+                      to="/products/dataops-drive"
+                      className="text-sm font-semibold text-yellow-700 hover:text-yellow-800 mb-3 inline-flex items-center gap-1"
+                    >
+                      See DataOps Drive — private AI over your own archive →
+                    </Link>
+                  )}
                   <Button to={`/quote?service=${service.id}`} variant="text" className="self-start">
                     Get a Quote →
                   </Button>

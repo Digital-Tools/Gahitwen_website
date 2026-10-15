@@ -5,7 +5,9 @@ import {
   ScanBarcode,
   Recycle,
   Handshake,
+  Database,
   ExternalLink,
+  ArrowRight,
   ChevronDown,
 } from "lucide-react";
 import Button from "../ui/Button";
@@ -20,10 +22,11 @@ type ProductDetailProps = {
   provesWeCanBuild: string[];
   salesLine: string;
   builtFor: string;
-  icon: "truck" | "scale" | "scan" | "recycle" | "handshake";
+  icon: "truck" | "scale" | "scan" | "recycle" | "handshake" | "database";
   playStoreUrl?: string;
   appStoreUrl?: string;
   websiteUrl?: string;
+  pageUrl?: string;
 };
 
 const iconMap = {
@@ -32,6 +35,7 @@ const iconMap = {
   scan: ScanBarcode,
   recycle: Recycle,
   handshake: Handshake,
+  database: Database,
 };
 
 const iconColors = {
@@ -40,6 +44,7 @@ const iconColors = {
   scan: "bg-purple-500",
   recycle: "bg-green-500",
   handshake: "bg-emerald-500",
+  database: "bg-yellow-500",
 };
 
 const ProductDetail = ({
@@ -56,6 +61,7 @@ const ProductDetail = ({
   playStoreUrl,
   appStoreUrl,
   websiteUrl,
+  pageUrl,
 }: ProductDetailProps) => {
   const [expanded, setExpanded] = useState(false);
   const Icon = iconMap[icon];
@@ -131,7 +137,16 @@ const ProductDetail = ({
 
         {/* CTA — pushed to bottom */}
         <div className="mt-auto pt-3">
-          {playStoreUrl || appStoreUrl ? (
+          {pageUrl ? (
+            <Button
+              to={pageUrl}
+              variant="outline"
+              size="sm"
+              className="w-full flex items-center justify-center gap-1.5"
+            >
+              View Product Page <ArrowRight size={13} />
+            </Button>
+          ) : playStoreUrl || appStoreUrl ? (
             <div className="flex items-center gap-2">
               {playStoreUrl && (
                 <a

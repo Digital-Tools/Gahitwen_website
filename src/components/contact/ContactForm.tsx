@@ -1,16 +1,19 @@
 import { useCallback, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Send, Loader2, ShieldAlert } from "lucide-react";
 import TurnstileWidget from "../ui/TurnstileWidget";
 import Button from "../ui/Button";
 import emailjs from "emailjs-com";
+import { trackEvent } from "../../lib/analytics";
 
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY;
 
 const ContactForm = () => {
+  const [searchParams] = useSearchParams();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    subject: "",
+    subject: searchParams.get("subject") ?? "",
     message: "",
   });
 
@@ -64,6 +67,9 @@ const ContactForm = () => {
       .then(() => {
         setIsSubmitting(false);
         setSubmitSuccess(true);
+        if (formData.subject === "DataOps Drive pilot") {
+          trackEvent("pilot_submitted");
+        }
         setFormData({
           name: "",
           email: "",
@@ -140,6 +146,7 @@ const ContactForm = () => {
         >
           <option value="">Select a subject</option>
           <option value="General Inquiry">General Inquiry</option>
+          <option value="DataOps Drive pilot">DataOps Drive pilot</option>
           <option value="Product Information">Product Information</option>
           <option value="Service Request">Service Request</option>
           <option value="Partnership Opportunity">

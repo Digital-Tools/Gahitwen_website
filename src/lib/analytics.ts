@@ -36,3 +36,12 @@ export const trackPageView = (path: string): void => {
   if (!id || !window.gtag) return;
   window.gtag('config', id, { page_path: path });
 };
+
+/** Fire a GA4 event (no-op when analytics is not configured). */
+export const trackEvent = (
+  name: string,
+  params?: Record<string, unknown>,
+): void => {
+  if (!window.gtag) return;
+  window.gtag('event', name, params ?? {});
+};

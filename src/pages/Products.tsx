@@ -118,6 +118,27 @@ const products = [
     icon: "handshake" as const,
     websiteUrl: "https://watheq.net/",
   },
+  {
+    id: "dataops-drive",
+    title: "DataOps Drive",
+    capability: "Private AI over your whole document archive",
+    tagline: "Your documents. Your AI. One private archive.",
+    summary:
+      "Connects the ChatGPT, Claude or Grok your team already uses to every document you have ever filed — including scanned paper — on your own infrastructure.",
+    pitch:
+      "Most firms already pay for a frontier AI and still cannot find the file. DataOps Drive bridges the two: a small agent syncs the folders each laptop already works in, everything lands in your own private storage, and a single secure connector (MCP) lets ChatGPT, Claude or Grok read the archive as the signed-in person — and nobody else's files. Scanned paper is recognised into text, so the documents that block every other tool become searchable and citable. Already proven in production against an archive of ~63,000 documents at a tax advisory practice.",
+    provesWeCanBuild: [
+      "Private document infrastructure that runs on the client's own servers",
+      "Secure, per-person AI connectors built on an open standard (MCP)",
+      "Recognition that turns scanned paper into searchable, citable text",
+      "Role- and department-scoped access, revocable at the source",
+    ],
+    salesLine:
+      "Your AI is only as good as what it can see. DataOps Drive lets it see everything you have filed — without your documents leaving your infrastructure.",
+    builtFor: "private document AI",
+    icon: "database" as const,
+    pageUrl: "/products/dataops-drive",
+  },
 ];
 
 const Products = () => {
@@ -136,7 +157,7 @@ const Products = () => {
     <>
       <Seo
         title="Products"
-        description="Evidence of what we can build: real-time logistics, multi-agent AI, compliance-grade document pipelines, and fintech — all live, in production, built by a lean team."
+        description="Evidence of what we can build: real-time logistics, multi-agent AI, compliance-grade document pipelines, fintech and private document AI — all live, in production, built by a lean team."
         path="/products"
         keywords={[
           "engineering capabilities",
@@ -146,6 +167,7 @@ const Products = () => {
           "fintech",
           "two-sided marketplace",
           "RAG",
+          "private document AI",
           "The Gahitwen LLC",
         ]}
       />

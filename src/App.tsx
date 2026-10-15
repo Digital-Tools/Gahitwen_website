@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import Home from './pages/Home';
 import Products from './pages/Products';
+import DataOpsDrive from './pages/DataOpsDrive';
 import Systems from './pages/Systems';
 import Services from './pages/Services';
 import Quote from './pages/Quote';
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/products/dataops-drive" element={<DataOpsDrive />} />
           <Route path="/systems" element={<Systems />} />
           <Route path="/services" element={<Services />} />
           <Route path="/quote" element={<Quote />} />

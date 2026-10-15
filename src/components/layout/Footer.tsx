@@ -126,6 +126,14 @@ const Footer = () => {
                   />
                 </a>
               </li>
+              <li>
+                <NavLink
+                  to="/products/dataops-drive"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  DataOps Drive
+                </NavLink>
+              </li>
             </ul>
           </div>
 
