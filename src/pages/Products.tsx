@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Seo from "../components/ui/Seo";
-import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import ProductDetail from "../components/products/ProductDetail";
 import Button from "../components/ui/Button";
+import PageHero from "../components/ui/PageHero";
+import CTASection from "../components/ui/CTASection";
 
 const products = [
   {
@@ -172,77 +174,61 @@ const Products = () => {
         ]}
       />
 
-      {/* Intro */}
-      <section className="pt-32 pb-14 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-brown-900 to-brown-800 text-white">
-        <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-2xl mx-auto"
-          >
-            <p className="inline-block text-yellow-500 text-xs font-semibold uppercase tracking-[0.2em] mb-3">
-              Built by a small team. Running at real scale.
-            </p>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">
-              Built. Live. Running.
-            </h1>
-            <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
-              Real customer experience starts here.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Built by a small team. Running at real scale."
+        title={
+          <>
+            Built. Live. <span className="accent">Running.</span>
+          </>
+        }
+        subtitle="Real customer experience starts here. Every product below is in production — and each one is proof of what we can build for you."
+      >
+        <Button to="/quote" size="lg">
+          Get a Quote
+          <ArrowRight size={18} />
+        </Button>
+        <Button to="/contact" variant="outline" size="lg">
+          Talk to the Team
+        </Button>
+      </PageHero>
 
-      {/* Product cards */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      {/* Product index */}
+      <nav
+        aria-label="Products on this page"
+        className="sticky top-[4.75rem] z-30 px-4 sm:px-6 lg:px-8"
+      >
         <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((product, index) => (
-              <motion.div
+          <div className="mx-auto flex w-fit max-w-full gap-1 overflow-x-auto rounded-full border border-brown-900/10 bg-white/80 p-1 shadow-card backdrop-blur-xl [scrollbar-width:none]">
+            {products.map((product) => (
+              <a
                 key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.08, duration: 0.5 }}
+                href={`#${product.id}`}
+                className="whitespace-nowrap rounded-full px-3.5 py-1.5 text-sm text-brown-700 transition-colors hover:bg-sand-100 hover:text-brown-950"
               >
-                <ProductDetail {...product} />
-              </motion.div>
+                {product.title}
+              </a>
             ))}
           </div>
         </div>
-      </section>
+      </nav>
 
-      {/* Closing CTA */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-brown-900 text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-yellow-500 opacity-10 skew-x-12"></div>
-        <div className="container mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="max-w-2xl mx-auto text-center"
-          >
-            <h2 className="text-2xl sm:text-3xl font-bold mb-4">
-              Small team. Production-grade complexity. Real users, right now.
-            </h2>
-            <p className="text-base text-gray-300 mb-6 leading-relaxed">
-              We're not a studio that ships prototypes — every product above is
-              live, handling real transactions, for real people, today. The same
-              rigor we bring to client work.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-3">
-              <Button to="/quote" variant="primary" size="md">
-                Get a Quote
-              </Button>
-              <Button to="/contact" variant="outlineOnDark" size="md">
-                Talk to the Team
-              </Button>
-            </div>
-          </motion.div>
+      <section className="px-4 pt-10 pb-8 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
+          {products.map((product, index) => (
+            <ProductDetail key={product.id} index={index} {...product} />
+          ))}
         </div>
       </section>
+
+      <CTASection
+        title={
+          <>
+            Small team. Production-grade complexity.{" "}
+            <span className="accent text-yellow-400">Real users, right now.</span>
+          </>
+        }
+        subtitle="We're not a studio that ships prototypes — every product above is live, handling real transactions, for real people, today. The same rigor we bring to client work."
+      />
     </>
   );
 };

@@ -64,17 +64,17 @@ const PipelineDiagram = ({
               transition={{ delay: index * 0.1, duration: 0.5 }}
               className="relative flex items-start gap-4 lg:flex-col lg:items-center lg:text-center"
             >
-              <div className="relative z-10 w-14 h-14 rounded-full bg-brown-900 text-white flex items-center justify-center flex-shrink-0 ring-8 ring-white">
+              <div className="relative z-10 w-14 h-14 rounded-2xl bg-brown-950 text-yellow-400 flex items-center justify-center flex-shrink-0 ring-8 ring-sand-50">
                 <stage.icon size={24} />
-                <span className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-yellow-500 text-brown-900 text-xs font-bold flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-yellow-500 text-brown-900 text-xs font-semibold flex items-center justify-center">
                   {index + 1}
                 </span>
               </div>
               <div className="lg:mt-5">
-                <h3 className="text-lg font-bold text-brown-900 mb-1">
+                <h3 className="text-lg font-semibold text-brown-900 mb-1">
                   {stage.title}
                 </h3>
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className="text-sm text-brown-600 leading-relaxed">
                   {stage.caption}
                 </p>
               </div>

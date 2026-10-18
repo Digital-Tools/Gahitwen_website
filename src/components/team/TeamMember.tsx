@@ -28,7 +28,7 @@ const TeamMember = ({ name, title, bio, imageUrl, linkedin, twitter }: TeamMembe
       <div className="p-6">
         <h3 className="text-xl font-bold text-brown-900 mb-1">{name}</h3>
         <p className="text-yellow-600 font-medium mb-3">{title}</p>
-        <p className="text-gray-600 mb-4">{bio}</p>
+        <p className="text-brown-600 mb-4">{bio}</p>
         
         {(linkedinUrl || twitterUrl) && (
           <div className="flex space-x-3">
@@ -37,7 +37,7 @@ const TeamMember = ({ name, title, bio, imageUrl, linkedin, twitter }: TeamMembe
                 href={linkedinUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-brown-900 transition-colors"
+                className="text-brown-600 hover:text-brown-900 transition-colors"
               >
                 <Linkedin size={18} />
                 <span className="sr-only">LinkedIn</span>
@@ -48,7 +48,7 @@ const TeamMember = ({ name, title, bio, imageUrl, linkedin, twitter }: TeamMembe
                 href={twitterUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-brown-900 transition-colors"
+                className="text-brown-600 hover:text-brown-900 transition-colors"
               >
                 <XIcon size={18} />
                 <span className="sr-only">Twitter</span>

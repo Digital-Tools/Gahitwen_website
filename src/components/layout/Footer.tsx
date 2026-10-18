@@ -5,232 +5,136 @@ import Instagram from "../icons/Instagram";
 import XIcon from "../icons/XIcon";
 import SquareArrowOutUpRight from "../icons/SquareArrowOutUpRight.tsx";
 import { SOCIAL_LINKS } from "../../lib/social";
+import { productSummaries } from "../../lib/products";
+
+const companyLinks = [
+  { to: "/", label: "Home" },
+  { to: "/products", label: "Products" },
+  { to: "/systems", label: "Systems" },
+  { to: "/services", label: "Services" },
+  { to: "/services#cybersecurity", label: "Cybersecurity" },
+  { to: "/quote", label: "Get a Quote" },
+  { to: "/contact", label: "Contact" },
+];
+
+const legalLinks = [
+  { to: "/privacy", label: "Privacy Policy" },
+  { to: "/terms", label: "Terms of Service" },
+];
+
+const socials = [
+  { href: SOCIAL_LINKS.linkedin, label: "LinkedIn", Icon: Linkedin },
+  { href: SOCIAL_LINKS.instagram, label: "Instagram", Icon: Instagram },
+  { href: SOCIAL_LINKS.x, label: "X", Icon: XIcon },
+];
+
+const linkClass = "text-[0.9375rem] text-white/55 transition-colors hover:text-white";
+const headingClass = "mb-5 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.16em] text-yellow-500";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-brown-900 text-white py-12">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="flex flex-col">
-            <div className="mb-4">
-              <Logo invert />
-            </div>
-            <p className="text-gray-300 mb-4">
+    <footer className="relative isolate overflow-hidden bg-brown-950 text-white">
+      <div
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+        aria-hidden="true"
+      />
+
+      <div className="container mx-auto px-4 pt-20 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-12">
+          <div className="col-span-2 md:col-span-4">
+            <Logo invert />
+            <p className="mt-5 max-w-xs text-[0.9375rem] leading-relaxed text-white/55">
               Small team. Production-grade systems. Real users, right now.
             </p>
-            <div className="flex space-x-4">
-              <a
-                href={SOCIAL_LINKS.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-yellow-500 transition-colors"
-              >
-                <Linkedin size={20} />
-                <span className="sr-only">LinkedIn</span>
-              </a>
-              <a
-                href={SOCIAL_LINKS.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-yellow-500 transition-colors"
-              >
-                <Instagram size={20} />
-                <span className="sr-only">Instagram</span>
-              </a>
-              <a
-                href={SOCIAL_LINKS.x}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-yellow-500 transition-colors"
-              >
-                <XIcon size={20} />
-                <span className="sr-only">X</span>
-              </a>
+            <div className="mt-6 flex gap-2">
+              {socials.map(({ href, label, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/60 transition-colors hover:border-yellow-500/60 hover:text-yellow-500"
+                >
+                  <Icon size={18} />
+                  <span className="sr-only">{label}</span>
+                </a>
+              ))}
             </div>
           </div>
 
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-yellow-500">
-              Products
-            </h3>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="https://logistics.gahitwen.com"
-                  className="text-gray-300 hover:text-white transition-colors flex items-center"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Gahitwen Logistics{" "}
-                  <SquareArrowOutUpRight
-                    size={14}
-                    className="ml-1 inline-block"
-                  />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://lawcap.gahitwen.com"
-                  className="text-gray-300 hover:text-white transition-colors flex items-center"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  LawCap{" "}
-                  <SquareArrowOutUpRight
-                    size={14}
-                    className="ml-1 inline-block"
-                  />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://risiti.gahitwen.com"
-                  className="text-gray-300 hover:text-white transition-colors flex items-center"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Risiti{" "}
-                  <SquareArrowOutUpRight
-                    size={14}
-                    className="ml-1 inline-block"
-                  />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://smart-taka.gahitwen.com"
-                  className="text-gray-300 hover:text-white transition-colors flex items-center"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Smart-Taka{" "}
-                  <SquareArrowOutUpRight
-                    size={14}
-                    className="ml-1 inline-block"
-                  />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://watheq.net/"
-                  className="text-gray-300 hover:text-white transition-colors flex items-center"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Watheq{" "}
-                  <SquareArrowOutUpRight
-                    size={14}
-                    className="ml-1 inline-block"
-                  />
-                </a>
-              </li>
-              <li>
-                <NavLink
-                  to="/products/dataops-drive"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  DataOps Drive
-                </NavLink>
-              </li>
+          <div className="md:col-span-3">
+            <h3 className={headingClass}>Products</h3>
+            <ul className="space-y-3">
+              {productSummaries.map((product) => (
+                <li key={product.id}>
+                  {product.externalUrl ? (
+                    <a
+                      href={product.externalUrl}
+                      className={`${linkClass} inline-flex items-center gap-1.5`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {product.name}
+                      <SquareArrowOutUpRight size={12} className="opacity-60" />
+                    </a>
+                  ) : (
+                    <NavLink to={product.to} className={linkClass}>
+                      {product.name}
+                    </NavLink>
+                  )}
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-yellow-500">
-              Company
-            </h3>
-            <ul className="space-y-2">
-              <li>
-                <NavLink
-                  to="/"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/products"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Products
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/systems"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Systems
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/services"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Services
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/services#cybersecurity"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Cybersecurity
-                </NavLink>
-              </li>
-              {/*<li><NavLink to="/team" className="text-gray-300 hover:text-white transition-colors">Team</NavLink></li>*/}
-              <li>
-                <NavLink
-                  to="/contact"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Contact
-                </NavLink>
-              </li>
+          <div className="md:col-span-2">
+            <h3 className={headingClass}>Company</h3>
+            <ul className="space-y-3">
+              {companyLinks.map((link) => (
+                <li key={link.to}>
+                  <NavLink to={link.to} className={linkClass}>
+                    {link.label}
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-yellow-500">
-              Legal
-            </h3>
-            <ul className="space-y-2">
-              <li>
-                <NavLink
-                  to="/privacy"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Privacy Policy
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/terms"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Terms of Service
-                </NavLink>
-              </li>
+          <div className="col-span-2 md:col-span-3">
+            <h3 className={headingClass}>Legal</h3>
+            <ul className="space-y-3">
+              {legalLinks.map((link) => (
+                <li key={link.to}>
+                  <NavLink to={link.to} className={linkClass}>
+                    {link.label}
+                  </NavLink>
+                </li>
+              ))}
             </ul>
-            <p className="text-xs text-gray-400 mt-4">
+            <p className="mt-6 text-xs leading-relaxed text-white/40">
               Some processing may use secure external servers. We never share
               personal data.
             </p>
+            <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/60">
+              <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse-dot" aria-hidden="true" />
+              All products live
+            </span>
           </div>
         </div>
 
-        <div className="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">
-            © {currentYear} The Gahitwen LLC. All rights reserved.
-          </p>
-          <p className="text-gray-400 text-sm mt-2 md:mt-0">
-            131 Continental Dr Ste 305, Newark, DE 19713, USA
-          </p>
+        <div className="mt-16 flex flex-col gap-2 border-t border-white/10 py-6 text-sm text-white/40 md:flex-row md:items-center md:justify-between">
+          <p>© {currentYear} The Gahitwen LLC. All rights reserved.</p>
+          <p>131 Continental Dr Ste 305, Newark, DE 19713, USA</p>
         </div>
+      </div>
+
+      {/* Oversized wordmark */}
+      <div className="pointer-events-none select-none overflow-hidden" aria-hidden="true">
+        <p className="-mb-[0.22em] text-center text-[22vw] font-semibold leading-none tracking-[-0.07em] text-transparent bg-gradient-to-b from-white/[0.09] to-transparent bg-clip-text">
+          Gahitwen
+        </p>
       </div>
     </footer>
   );

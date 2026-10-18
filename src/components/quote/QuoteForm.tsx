@@ -21,8 +21,8 @@ interface SuccessPayload {
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY;
 
 const inputClasses =
-  "block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500";
-const labelClasses = "block text-sm font-medium text-gray-700 mb-1";
+  "block w-full rounded-xl border border-brown-900/15 bg-white px-4 py-3 text-brown-950 placeholder:text-brown-400 transition-shadow focus:border-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-500/20";
+const labelClasses = "mb-1.5 block text-sm font-medium text-brown-800";
 
 const QuoteForm = () => {
   const formStartedAt = useRef(Date.now());
@@ -161,21 +161,21 @@ const QuoteForm = () => {
 
   if (submitState === "success" && success) {
     return (
-      <div className="bg-white rounded-lg shadow-lg p-8 md:p-12 text-center max-w-2xl mx-auto">
+      <div className="bg-white rounded-3xl border border-brown-900/10 shadow-lift p-8 md:p-12 text-center max-w-2xl mx-auto">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-600 mb-6">
           <CheckCircle2 size={36} />
         </div>
         <h2 className="text-2xl font-bold text-brown-900 mb-3">
           Quote request received
         </h2>
-        <p className="text-gray-600 mb-6">
+        <p className="text-brown-600 mb-6">
           Thank you! We&apos;ve emailed a confirmation with your reference
           number. Our team will review the full scope of your project and follow
           up with a tailored quote within 1–2 business days. Please keep your
           reference number for any follow-up.
         </p>
-        <div className="inline-flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-md px-4 py-3 mb-6">
-          <span className="text-sm text-gray-500">Reference</span>
+        <div className="inline-flex items-center gap-3 bg-sand-50 border border-brown-900/10 rounded-xl px-4 py-3 mb-6">
+          <span className="text-sm text-brown-500">Reference</span>
           <span className="font-mono font-semibold text-brown-900">
             {success.ticketRef}
           </span>
@@ -201,8 +201,8 @@ const QuoteForm = () => {
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Service & scope */}
-        <fieldset className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 md:p-8">
-          <legend className="text-lg font-bold text-brown-900 px-2">
+        <fieldset className="rounded-3xl border border-brown-900/10 bg-white p-6 shadow-card md:p-8">
+          <legend className="px-2 text-lg font-semibold tracking-tight text-brown-950">
             1. What do you need?
           </legend>
 
@@ -237,7 +237,7 @@ const QuoteForm = () => {
                 </optgroup>
               </select>
               {service && (
-                <p className="text-sm text-gray-500 mt-1">{service.blurb}</p>
+                <p className="text-sm text-brown-500 mt-1">{service.blurb}</p>
               )}
             </div>
 
@@ -247,10 +247,10 @@ const QuoteForm = () => {
                 {scopes.map((s) => (
                   <label
                     key={s.id}
-                    className={`cursor-pointer rounded-md border p-4 transition-colors ${
+                    className={`cursor-pointer rounded-xl border p-4 transition-colors ${
                       activeScopeId === s.id
                         ? "border-yellow-500 bg-yellow-50"
-                        : "border-gray-200 hover:border-gray-300"
+                        : "border-brown-900/10 hover:border-brown-900/25"
                     }`}
                   >
                     <input
@@ -264,7 +264,7 @@ const QuoteForm = () => {
                     <span className="block font-medium text-brown-900">
                       {s.label}
                     </span>
-                    <span className="block text-sm text-gray-500">
+                    <span className="block text-sm text-brown-500">
                       {s.description}
                     </span>
                   </label>
@@ -275,11 +275,11 @@ const QuoteForm = () => {
         </fieldset>
 
         {/* Region */}
-        <fieldset className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 md:p-8">
-          <legend className="text-lg font-bold text-brown-900 px-2">
+        <fieldset className="rounded-3xl border border-brown-900/10 bg-white p-6 shadow-card md:p-8">
+          <legend className="px-2 text-lg font-semibold tracking-tight text-brown-950">
             2. Where are you located?
           </legend>
-          <p className="text-sm text-gray-500 mt-2 mb-4">
+          <p className="text-sm text-brown-500 mt-2 mb-4">
             We tailor rates to your region and show estimates in your local
             currency.
           </p>
@@ -298,22 +298,22 @@ const QuoteForm = () => {
         </fieldset>
 
         {/* Additional services */}
-        <fieldset className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 md:p-8">
-          <legend className="text-lg font-bold text-brown-900 px-2">
+        <fieldset className="rounded-3xl border border-brown-900/10 bg-white p-6 shadow-card md:p-8">
+          <legend className="px-2 text-lg font-semibold tracking-tight text-brown-950">
             3. Anything else?{" "}
-            <span className="font-normal text-gray-400">(optional)</span>
+            <span className="font-normal text-brown-400">(optional)</span>
           </legend>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4">
             {SERVICES.filter((s) => s.id !== serviceId).map((s) => (
               <label
                 key={s.id}
-                className="flex items-center gap-2 text-sm text-gray-700"
+                className="flex items-center gap-2 text-sm text-brown-700"
               >
                 <input
                   type="checkbox"
                   checked={additionalServiceIds.includes(s.id)}
                   onChange={() => toggleAdditional(s.id)}
-                  className="rounded border-gray-300 text-yellow-500 focus:ring-yellow-500"
+                  className="rounded border-brown-900/20 accent-yellow-500 focus:ring-yellow-500"
                 />
                 {s.name}
               </label>
@@ -322,8 +322,8 @@ const QuoteForm = () => {
         </fieldset>
 
         {/* Contact & details */}
-        <fieldset className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 md:p-8">
-          <legend className="text-lg font-bold text-brown-900 px-2">
+        <fieldset className="rounded-3xl border border-brown-900/10 bg-white p-6 shadow-card md:p-8">
+          <legend className="px-2 text-lg font-semibold tracking-tight text-brown-950">
             4. Your details
           </legend>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-4">
@@ -481,7 +481,7 @@ const QuoteForm = () => {
                 theme="light"
               />
             ) : (
-              <div className="p-3 bg-amber-50 border border-amber-200 rounded-md text-amber-700 text-sm flex items-center gap-2">
+              <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-700 text-sm flex items-center gap-2">
                 <ShieldAlert size={16} />
                 Verification is not configured. Set VITE_TURNSTILE_SITE_KEY in
                 your environment.
@@ -500,25 +500,25 @@ const QuoteForm = () => {
             >
               {submitState === "submitting" ? (
                 <>
-                  <Loader2 size={20} className="mr-2 animate-spin" /> Sending
+                  <Loader2 size={20} className="animate-spin" /> Sending
                   request...
                 </>
               ) : (
                 <>
-                  <Send size={20} className="mr-2" /> Request My Quote
+                  <Send size={20} /> Request My Quote
                 </>
               )}
             </Button>
           </div>
 
           {errorMsg && (
-            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md text-red-700 text-sm">
+            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
               {errorMsg}
             </div>
           )}
         </fieldset>
 
-        <p className="text-sm text-gray-500 text-center">
+        <p className="text-sm text-brown-500 text-center">
           Our team reviews the full scope of your request and emails you a
           tailored estimate — no automated pricing is shown here.
         </p>

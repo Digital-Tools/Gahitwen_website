@@ -5,12 +5,15 @@ import {
   ChevronDown,
   ShieldCheck,
   Lock,
+  ArrowRight,
 } from "lucide-react";
 import Seo from "../components/ui/Seo";
 import Button from "../components/ui/Button";
 import SectionHeading from "../components/ui/SectionHeading";
 import Card from "../components/ui/Card";
 import PipelineDiagram from "../components/products/PipelineDiagram";
+import Eyebrow from "../components/ui/Eyebrow";
+import CTASection from "../components/ui/CTASection";
 import { organizationSchema } from "../lib/structuredData";
 import { trackEvent } from "../lib/analytics";
 
@@ -247,36 +250,33 @@ const DataOpsDrive = () => {
       />
 
       {/* Hero */}
-      <section className="relative pt-32 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-brown-900 to-brown-800 text-white overflow-hidden">
-        <div
-          className="absolute top-0 right-0 w-1/3 h-full bg-yellow-500 opacity-10 skew-x-12"
-          aria-hidden="true"
-        />
-        <div className="container mx-auto relative z-10">
+      <section className="relative overflow-hidden px-4 pt-36 pb-20 sm:px-6 md:pt-44 md:pb-28 lg:px-8">
+        <div className="absolute inset-0 bg-grid mask-fade-radial" aria-hidden="true" />
+        <div className="container relative mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl"
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto flex max-w-4xl flex-col items-center text-center"
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-yellow-500 mb-4">
-              DataOps Drive
-            </p>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              Your documents. Your AI. One private archive.
+            <Eyebrow className="mb-6">DataOps Drive</Eyebrow>
+            <h1 className="text-4xl leading-[1.02] text-brown-950 sm:text-5xl md:text-7xl">
+              Your documents. Your AI.{" "}
+              <span className="accent text-brown-800">One private archive.</span>
             </h1>
-            <p className="text-lg sm:text-xl text-gray-300 mb-8 leading-relaxed max-w-2xl">
+            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-brown-700/80 sm:text-xl">
               Connect the ChatGPT, Claude or Grok your team already uses to
               everything you have ever filed — including the scanned paper.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="mt-10 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
               <Button to={PILOT} size="lg" onClick={openWalkthrough}>
                 Book a walkthrough on your own archive
+                <ArrowRight size={18} />
               </Button>
               <Button
                 to={PILOT}
                 size="lg"
-                variant="outlineOnDark"
+                variant="outline"
                 onClick={openProposal}
               >
                 Get the proposal
@@ -284,12 +284,17 @@ const DataOpsDrive = () => {
             </div>
           </motion.div>
 
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-px rounded-lg overflow-hidden border border-brown-700 bg-brown-700">
-            {trustStrip.map((item) => (
+          <div className="mx-auto mt-16 grid max-w-5xl grid-cols-2 overflow-hidden rounded-3xl border border-brown-900/10 bg-white/70 backdrop-blur md:grid-cols-4">
+            {trustStrip.map((item, index) => (
               <div
                 key={item}
-                className="bg-brown-900/70 px-4 py-3 text-sm text-gray-200 text-center"
+                className={`flex items-center justify-center gap-2 px-4 py-5 text-center text-sm font-medium text-brown-800 ${
+                  index % 2 === 1 ? "border-l border-brown-900/10" : ""
+                } ${index > 1 ? "border-t border-brown-900/10 md:border-t-0" : ""} ${
+                  index === 2 ? "md:border-l" : ""
+                }`}
               >
+                <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-yellow-500" aria-hidden="true" />
                 {item}
               </div>
             ))}
@@ -298,7 +303,7 @@ const DataOpsDrive = () => {
       </section>
 
       {/* Problem */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-24 md:py-28 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-4xl">
           <SectionHeading
             eyebrow="The problem"
@@ -310,7 +315,7 @@ const DataOpsDrive = () => {
             {problems.map((problem) => (
               <li
                 key={problem}
-                className="flex items-start gap-3 text-gray-600 leading-relaxed"
+                className="flex items-start gap-3 text-brown-600 leading-relaxed"
               >
                 <X
                   size={18}
@@ -325,7 +330,7 @@ const DataOpsDrive = () => {
       </section>
 
       {/* The shift */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section className="py-24 md:py-28 px-4 sm:px-6 lg:px-8 bg-sand-100/60 border-y border-brown-900/10">
         <div className="container mx-auto max-w-4xl">
           <SectionHeading
             eyebrow="The shift"
@@ -337,7 +342,7 @@ const DataOpsDrive = () => {
             {shifts.map((shift) => (
               <li
                 key={shift}
-                className="flex items-start gap-3 text-gray-600 leading-relaxed"
+                className="flex items-start gap-3 text-brown-600 leading-relaxed"
               >
                 <CheckCircle2
                   size={18}
@@ -352,7 +357,7 @@ const DataOpsDrive = () => {
       </section>
 
       {/* Pipeline */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-24 md:py-28 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <SectionHeading
             eyebrow="How it works"
@@ -365,25 +370,25 @@ const DataOpsDrive = () => {
       </section>
 
       {/* What you get */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section className="py-24 md:py-28 px-4 sm:px-6 lg:px-8 bg-sand-100/60 border-y border-brown-900/10">
         <div className="container mx-auto max-w-4xl">
           <SectionHeading
             eyebrow="What you get"
             title="One system: your files, made answerable."
             centered
           />
-          <div className="rounded-lg border border-brown-100 bg-white overflow-hidden">
+          <div className="rounded-3xl border border-brown-900/10 bg-white shadow-card overflow-hidden">
             {capabilities.map(([capability, meaning], index) => (
               <div
                 key={capability}
                 className={`flex flex-col sm:flex-row gap-1 sm:gap-6 px-5 py-4 ${
-                  index > 0 ? "border-t border-brown-100" : ""
+                  index > 0 ? "border-t border-brown-900/10" : ""
                 }`}
               >
                 <span className="sm:w-56 flex-shrink-0 font-semibold text-brown-900">
                   {capability}
                 </span>
-                <span className="text-gray-600 leading-relaxed">{meaning}</span>
+                <span className="text-brown-600 leading-relaxed">{meaning}</span>
               </div>
             ))}
           </div>
@@ -391,7 +396,7 @@ const DataOpsDrive = () => {
       </section>
 
       {/* Why only us */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-24 md:py-28 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-4xl">
           <SectionHeading
             eyebrow="Why only us"
@@ -403,7 +408,7 @@ const DataOpsDrive = () => {
             {whyUs.map((item) => (
               <li
                 key={item}
-                className="flex items-start gap-3 text-gray-700 leading-relaxed"
+                className="flex items-start gap-3 text-brown-700 leading-relaxed"
               >
                 <CheckCircle2
                   size={18}
@@ -418,16 +423,17 @@ const DataOpsDrive = () => {
       </section>
 
       {/* Proof */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-brown-900 to-brown-800 text-white">
+      <section className="relative isolate overflow-hidden py-24 md:py-28 px-4 sm:px-6 lg:px-8 bg-brown-950 text-white">
+        <div className="absolute inset-0 -z-10 bg-grid-dark mask-fade-radial" aria-hidden="true" />
         <div className="container mx-auto max-w-5xl">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-yellow-500 mb-3">
+            <Eyebrow dark className="mb-5">
               Proof
-            </p>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-3">
+            </Eyebrow>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl leading-[1.05] mb-5">
               It is not a concept. It already works.
             </h2>
-            <p className="text-lg text-gray-300">
+            <p className="text-lg text-white/60">
               Built and running against a real archive at a tax advisory
               practice.
             </p>
@@ -437,12 +443,12 @@ const DataOpsDrive = () => {
             {stats.map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-lg bg-brown-800/60 border border-brown-700 p-6 text-center"
+                className="rounded-2xl bg-white/[0.03] border border-white/10 p-6 text-center"
               >
-                <p className="text-3xl sm:text-4xl font-bold text-yellow-500 mb-2">
+                <p className="text-3xl sm:text-4xl font-semibold tracking-[-0.04em] text-yellow-400 mb-2">
                   {stat.value}
                 </p>
-                <p className="text-sm text-gray-300 leading-snug">
+                <p className="text-sm text-white/70 leading-snug">
                   {stat.label}
                 </p>
               </div>
@@ -453,7 +459,7 @@ const DataOpsDrive = () => {
             {proofPoints.map((point) => (
               <li
                 key={point}
-                className="flex items-start gap-3 text-gray-300 leading-relaxed"
+                className="flex items-start gap-3 text-white/65 leading-relaxed"
               >
                 <CheckCircle2
                   size={18}
@@ -465,14 +471,14 @@ const DataOpsDrive = () => {
             ))}
           </ul>
 
-          <p className="text-center text-sm text-gray-400 mt-10">
+          <p className="text-center text-sm text-brown-400 mt-10">
             No client is named. Proof is stated, not attributed.
           </p>
         </div>
       </section>
 
       {/* Works with */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-24 md:py-28 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-3xl text-center">
           <SectionHeading
             eyebrow="Works with what you have"
@@ -483,13 +489,13 @@ const DataOpsDrive = () => {
             {assistants.map((assistant) => (
               <span
                 key={assistant}
-                className="px-5 py-2.5 rounded-full bg-gray-100 text-brown-900 font-semibold"
+                className="px-5 py-2.5 rounded-full border border-brown-900/10 bg-white text-brown-900 font-semibold shadow-card"
               >
                 {assistant}
               </span>
             ))}
           </div>
-          <p className="text-gray-600 leading-relaxed">
+          <p className="text-brown-600 leading-relaxed">
             Built on MCP, the open connector standard — so the next assistant
             plugs in without a rebuild.
           </p>
@@ -500,7 +506,7 @@ const DataOpsDrive = () => {
       </section>
 
       {/* Pricing */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section className="py-24 md:py-28 px-4 sm:px-6 lg:px-8 bg-sand-100/60 border-y border-brown-900/10">
         <div className="container mx-auto">
           <SectionHeading
             eyebrow="Pricing"
@@ -521,22 +527,22 @@ const DataOpsDrive = () => {
               <Card
                 key={option.id}
                 className={`h-full flex flex-col ${
-                  option.featured ? "ring-2 ring-yellow-500" : ""
+                  option.featured ? "ring-2 ring-yellow-500 shadow-glow" : ""
                 }`}
               >
                 <div className="p-6 flex flex-col flex-grow">
                   <div className="flex items-start justify-between gap-3 mb-4">
-                    <h3 className="text-xl font-bold text-brown-900">
+                    <h3 className="text-xl font-semibold text-brown-900">
                       {option.name}
                     </h3>
                     <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-yellow-500/10 text-yellow-700 whitespace-nowrap">
                       {option.note}
                     </span>
                   </div>
-                  <p className="text-3xl font-bold text-brown-900 leading-none">
+                  <p className="text-3xl font-semibold tracking-[-0.04em] text-brown-950 leading-none">
                     {option.price}
                   </p>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-sm text-brown-500 mt-1">
                     {option.unit} · {option.usd}
                   </p>
 
@@ -544,7 +550,7 @@ const DataOpsDrive = () => {
                     {option.features.map((feature) => (
                       <li
                         key={feature}
-                        className="text-sm text-gray-600 flex items-start gap-2"
+                        className="text-sm text-brown-600 flex items-start gap-2"
                       >
                         <CheckCircle2
                           size={15}
@@ -573,7 +579,7 @@ const DataOpsDrive = () => {
             ))}
           </div>
 
-          <div className="mt-8 rounded-lg bg-brown-900 text-white p-6 md:p-8 text-center">
+          <div className="mt-6 rounded-3xl bg-brown-950 text-white p-6 md:p-10 text-center">
             <p className="text-lg font-medium leading-relaxed max-w-3xl mx-auto">
               Take both: <span className="text-yellow-500">10% off</span> the
               combined one-off, or your{" "}
@@ -581,7 +587,7 @@ const DataOpsDrive = () => {
               DataOps Monthly + Harness. Three-year price freeze on recurring
               fees. Founding-customer terms for the first practice to deploy.
             </p>
-            <p className="text-sm text-gray-400 mt-4">
+            <p className="text-sm text-brown-400 mt-4">
               Prices exclude VAT (18%). Full commercial terms are delivered with
               the proposal.
             </p>
@@ -590,7 +596,7 @@ const DataOpsDrive = () => {
       </section>
 
       {/* Included / not included */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-24 md:py-28 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-4xl">
           <SectionHeading
             eyebrow="Scope"
@@ -598,27 +604,27 @@ const DataOpsDrive = () => {
             centered
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="rounded-lg border border-brown-100 p-6">
-              <h3 className="flex items-center gap-2 text-lg font-bold text-brown-900 mb-4">
+            <div className="rounded-3xl border border-brown-900/10 bg-white p-7 shadow-card">
+              <h3 className="flex items-center gap-2 text-lg font-semibold text-brown-900 mb-4">
                 <CheckCircle2 size={20} className="text-yellow-500" />
                 Included
               </h3>
               <ul className="space-y-2">
                 {included.map((item) => (
-                  <li key={item} className="text-gray-600 leading-relaxed">
+                  <li key={item} className="text-brown-600 leading-relaxed">
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="rounded-lg border border-brown-100 p-6">
-              <h3 className="flex items-center gap-2 text-lg font-bold text-brown-900 mb-4">
+            <div className="rounded-3xl border border-brown-900/10 bg-white p-7 shadow-card">
+              <h3 className="flex items-center gap-2 text-lg font-semibold text-brown-900 mb-4">
                 <X size={20} className="text-brown-400" />
                 Not included
               </h3>
               <ul className="space-y-2">
                 {notIncluded.map((item) => (
-                  <li key={item} className="text-gray-600 leading-relaxed">
+                  <li key={item} className="text-brown-600 leading-relaxed">
                     {item}
                   </li>
                 ))}
@@ -629,7 +635,7 @@ const DataOpsDrive = () => {
       </section>
 
       {/* How we get you live */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section className="py-24 md:py-28 px-4 sm:px-6 lg:px-8 bg-sand-100/60 border-y border-brown-900/10">
         <div className="container mx-auto max-w-4xl">
           <SectionHeading
             eyebrow="Getting live"
@@ -640,16 +646,16 @@ const DataOpsDrive = () => {
             {steps.map((step, index) => (
               <li
                 key={step.title}
-                className="flex items-start gap-4 rounded-lg border border-brown-100 bg-white p-6"
+                className="flex items-start gap-4 rounded-2xl border border-brown-900/10 bg-white p-6 shadow-card"
               >
-                <span className="w-9 h-9 rounded-full bg-yellow-500 text-brown-900 font-bold flex items-center justify-center flex-shrink-0">
+                <span className="w-10 h-10 rounded-xl bg-brown-950 text-yellow-400 font-mono text-sm flex items-center justify-center flex-shrink-0">
                   {index + 1}
                 </span>
                 <div>
-                  <h3 className="font-bold text-brown-900 mb-1">
+                  <h3 className="font-semibold text-brown-900 mb-1">
                     {step.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">{step.body}</p>
+                  <p className="text-brown-600 leading-relaxed">{step.body}</p>
                 </div>
               </li>
             ))}
@@ -661,18 +667,18 @@ const DataOpsDrive = () => {
       </section>
 
       {/* FAQ */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-24 md:py-28 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-3xl">
           <SectionHeading
             eyebrow="FAQ"
             title="Where the objections die."
             centered
           />
-          <div className="divide-y divide-brown-100 border-y border-brown-100">
+          <div className="divide-y divide-brown-900/10 border-y border-brown-900/10">
             {faqs.map((faq) => (
               <details key={faq.q} className="group py-5">
                 <summary className="flex items-center justify-between gap-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                  <span className="font-semibold text-brown-900">
+                  <span className="text-lg font-medium tracking-tight text-brown-950">
                     {faq.q}
                   </span>
                   <ChevronDown
@@ -680,7 +686,7 @@ const DataOpsDrive = () => {
                     className="text-yellow-600 flex-shrink-0 transition-transform duration-200 group-open:rotate-180"
                   />
                 </summary>
-                <p className="text-gray-600 leading-relaxed mt-3 pr-8">
+                <p className="text-brown-600 leading-relaxed mt-3 pr-8">
                   {faq.a}
                 </p>
               </details>
@@ -690,46 +696,23 @@ const DataOpsDrive = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-brown-900 to-brown-800 text-white relative overflow-hidden">
-        <div
-          className="absolute top-0 right-0 w-1/3 h-full bg-yellow-500 opacity-10 skew-x-12"
-          aria-hidden="true"
-        />
-        <div className="container mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="max-w-2xl mx-auto text-center"
-          >
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              The archive is already there. Let it answer.
-            </h2>
-            <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-              Send us 20 documents. We'll show you your own archive answering
-              questions about them.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-3">
-              <Button to={PILOT} size="lg" onClick={openWalkthrough}>
-                Book a walkthrough on your own archive
-              </Button>
-              <Button
-                to={PILOT}
-                size="lg"
-                variant="outlineOnDark"
-                onClick={openProposal}
-              >
-                Get the proposal
-              </Button>
-            </div>
-            <p className="flex items-center justify-center gap-2 text-sm text-gray-400 mt-8">
-              <Lock size={14} />
-              Private by design — your documents stay on your infrastructure
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <CTASection
+        title={
+          <>
+            The archive is already there.{" "}
+            <span className="accent text-yellow-400">Let it answer.</span>
+          </>
+        }
+        subtitle="Send us 20 documents. We'll show you your own archive answering questions about them."
+        primary={{ label: "Book a walkthrough on your own archive", to: PILOT, onClick: openWalkthrough }}
+        secondary={{ label: "Get the proposal", to: PILOT, onClick: openProposal }}
+        footnote={
+          <>
+            <Lock size={14} />
+            Private by design — your documents stay on your infrastructure
+          </>
+        }
+      />
     </>
   );
 };

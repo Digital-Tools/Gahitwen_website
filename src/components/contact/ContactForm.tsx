@@ -96,7 +96,7 @@ const ContactForm = () => {
       <div>
         <label
           htmlFor="name"
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="mb-1.5 block text-sm font-medium text-brown-800"
         >
           Name
         </label>
@@ -107,14 +107,14 @@ const ContactForm = () => {
           value={formData.name}
           onChange={handleChange}
           required
-          className="block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500"
+          className="block w-full rounded-xl border border-brown-900/15 bg-white px-4 py-3 text-brown-950 placeholder:text-brown-400 transition-shadow focus:border-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-500/20"
         />
       </div>
 
       <div>
         <label
           htmlFor="email"
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="mb-1.5 block text-sm font-medium text-brown-800"
         >
           Email
         </label>
@@ -125,14 +125,14 @@ const ContactForm = () => {
           value={formData.email}
           onChange={handleChange}
           required
-          className="block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500"
+          className="block w-full rounded-xl border border-brown-900/15 bg-white px-4 py-3 text-brown-950 placeholder:text-brown-400 transition-shadow focus:border-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-500/20"
         />
       </div>
 
       <div>
         <label
           htmlFor="subject"
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="mb-1.5 block text-sm font-medium text-brown-800"
         >
           Subject
         </label>
@@ -142,7 +142,7 @@ const ContactForm = () => {
           value={formData.subject}
           onChange={handleChange}
           required
-          className="block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500"
+          className="block w-full rounded-xl border border-brown-900/15 bg-white px-4 py-3 text-brown-950 placeholder:text-brown-400 transition-shadow focus:border-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-500/20"
         >
           <option value="">Select a subject</option>
           <option value="General Inquiry">General Inquiry</option>
@@ -159,7 +159,7 @@ const ContactForm = () => {
       <div>
         <label
           htmlFor="message"
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="mb-1.5 block text-sm font-medium text-brown-800"
         >
           Message
         </label>
@@ -170,7 +170,7 @@ const ContactForm = () => {
           onChange={handleChange}
           required
           rows={6}
-          className="block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500"
+          className="block w-full rounded-xl border border-brown-900/15 bg-white px-4 py-3 text-brown-950 placeholder:text-brown-400 transition-shadow focus:border-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-500/20"
         ></textarea>
       </div>
 
@@ -182,7 +182,7 @@ const ContactForm = () => {
           theme="light"
         />
       ) : (
-        <div className="p-3 bg-amber-50 border border-amber-200 rounded-md text-amber-700 text-sm flex items-center gap-2">
+        <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-700 text-sm flex items-center gap-2">
           <ShieldAlert size={16} />
           Verification is not configured. Set VITE_TURNSTILE_SITE_KEY in your
           environment.
@@ -197,12 +197,12 @@ const ContactForm = () => {
         >
           {isSubmitting ? (
             <>
-              <Loader2 size={20} className="mr-2 animate-spin" />
+              <Loader2 size={20} className="animate-spin" />
               Sending...
             </>
           ) : (
             <>
-              <Send size={20} className="mr-2" />
+              <Send size={20} />
               Send Message
             </>
           )}
@@ -210,13 +210,13 @@ const ContactForm = () => {
       </div>
 
       {submitSuccess && (
-        <div className="p-4 bg-green-50 border border-green-200 rounded-md text-green-700">
+        <div className="p-4 bg-green-50 border border-green-200 rounded-xl text-green-700">
           Thank you for your message! We'll get back to you soon.
         </div>
       )}
 
       {submitError && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-md text-red-700">
+        <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700">
           {submitError}
         </div>
       )}
