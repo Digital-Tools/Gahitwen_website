@@ -1,9 +1,10 @@
 import Seo from "../components/ui/Seo";
 import Hero from "../components/home/Hero";
-import TrustStrip from "../components/home/TrustStrip";
+import LogoCloud from "../components/home/LogoCloud";
 import ProductsOverview from "../components/home/ProductsOverview";
 import ServicesOverview from "../components/home/ServicesOverview";
 import ClientWork from "../components/home/ClientWork";
+import Process from "../components/home/Process";
 import CallToAction from "../components/home/CallToAction";
 import { organizationSchema } from "../lib/structuredData";
 
@@ -28,10 +29,11 @@ const Home = () => {
       />
 
       <Hero />
-      <TrustStrip />
+      <LogoCloud />
       <ProductsOverview />
-      <ClientWork />
       <ServicesOverview />
+      <ClientWork />
+      <Process />
       <CallToAction />
     </>
   );

@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Seo from '../components/ui/Seo';
 import { motion } from 'framer-motion';
-import { 
+import {
+  ArrowRight,
   Code, 
   Cloud, 
   Smartphone, 
@@ -15,8 +16,11 @@ import {
   Siren,
   Compass
 } from 'lucide-react';
-import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
+import PageHero from '../components/ui/PageHero';
+import SectionHeading from '../components/ui/SectionHeading';
+import SpotlightCard from '../components/ui/SpotlightCard';
+import CTASection from '../components/ui/CTASection';
 import { organizationSchema, buildServicesSchema } from '../lib/structuredData';
 
 const services = [
@@ -25,42 +29,36 @@ const services = [
     title: 'Custom Software Development',
     description: 'We design and build custom software solutions tailored to your specific business needs. From web applications to enterprise systems, our team delivers scalable, maintainable code that drives your business forward.',
     icon: Code,
-    color: 'text-blue-500',
   },
   {
     id: 'cloud-devops',
     title: 'Cloud & DevOps Solutions',
     description: 'Optimize your infrastructure with our cloud expertise and DevOps practices. We help you migrate to the cloud, implement CI/CD pipelines, and ensure your systems are scalable, reliable, and secure.',
     icon: Cloud,
-    color: 'text-indigo-500',
   },
   {
     id: 'mobile-app',
     title: 'Mobile App Design & Integration',
     description: 'From concept to launch, we develop intuitive mobile applications that engage users and integrate seamlessly with your existing systems. Our cross-platform expertise ensures your app works flawlessly on all devices.',
     icon: Smartphone,
-    color: 'text-green-500',
   },
   {
     id: 'data-analytics',
     title: 'Data Analytics & AI Consulting',
     description: 'Transform your data into actionable insights. Our data analytics and AI services help you identify patterns, predict trends, and make data-driven decisions that give your business a competitive edge.',
     icon: BarChart3,
-    color: 'text-yellow-500',
   },
   {
     id: 'database-management',
     title: 'Database Management & Optimization',
     description: 'Ensure your data is structured, secure, and performing optimally. We design, implement, and optimize database solutions that scale with your business and provide reliable access to your critical information.',
     icon: Database,
-    color: 'text-red-500',
   },
   {
     id: 'security-solutions',
     title: 'Security Solutions & Compliance',
     description: 'Protect your digital assets with our comprehensive security services. We help you identify vulnerabilities, implement robust security measures, and ensure compliance with relevant regulations and standards.',
     icon: ShieldCheck,
-    color: 'text-purple-500',
   },
 ];
 
@@ -138,108 +136,119 @@ const Services = () => {
         jsonLd={[organizationSchema, servicesSchema]}
       />
       
-      <section className="pt-32 pb-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-brown-900 to-brown-800 text-white">
+      <PageHero
+        eyebrow="Services"
+        title={
+          <>
+            Our <span className="accent">services</span>
+          </>
+        }
+        subtitle="We provide comprehensive technology solutions to help businesses innovate, grow, and stay ahead of the competition."
+      >
+        <Button to="/quote" size="lg">
+          Get a Quote
+          <ArrowRight size={18} />
+        </Button>
+        <Button href="#cybersecurity" variant="outline" size="lg">
+          <ShieldCheck size={18} />
+          Cybersecurity
+        </Button>
+      </PageHero>
+
+      <section className="px-4 pb-24 sm:px-6 md:pb-32 lg:px-8">
         <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6">Our Services</h1>
-            <p className="text-xl text-gray-300">
-              We provide comprehensive technology solutions to help businesses 
-              innovate, grow, and stay ahead of the competition.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-      
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service, index) => (
               <motion.div
                 key={service.id}
                 id={service.id}
-                className="scroll-mt-24"
+                className="scroll-mt-28"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.06, duration: 0.5 }}
               >
-                <Card className="h-full flex flex-col p-8">
-                  <div className={`${service.color} mb-6`}>
-                    <service.icon size={40} />
+                <SpotlightCard className="flex h-full flex-col p-8">
+                  <div className="flex items-center justify-between">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-brown-900/10 bg-sand-50 text-brown-800 transition-colors duration-300 group-hover/spot:border-yellow-500/50 group-hover/spot:bg-yellow-500 group-hover/spot:text-brown-950">
+                      <service.icon size={22} />
+                    </span>
+                    <span className="font-mono text-xs text-brown-300">0{index + 1}</span>
                   </div>
-                  <h3 className="text-2xl font-bold text-brown-900 mb-4">{service.title}</h3>
-                  <p className="text-gray-600 mb-6 flex-grow">{service.description}</p>
+                  <h2 className="mt-7 text-2xl text-brown-950">{service.title}</h2>
+                  <p className="mt-3 flex-grow leading-relaxed text-brown-600">{service.description}</p>
                   {service.id === 'data-analytics' && (
                     <Link
                       to="/products/dataops-drive"
-                      className="text-sm font-semibold text-yellow-700 hover:text-yellow-800 mb-3 inline-flex items-center gap-1"
+                      className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-yellow-800 hover:text-brown-950"
                     >
                       See DataOps Drive — private AI over your own archive →
                     </Link>
                   )}
-                  <Button to={`/quote?service=${service.id}`} variant="text" className="self-start">
-                    Get a Quote →
-                  </Button>
-                </Card>
+                  <div className="mt-6 border-t border-brown-900/10 pt-5">
+                    <Link
+                      to={`/quote?service=${service.id}`}
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-brown-950"
+                    >
+                      Get a quote
+                      <ArrowRight size={15} className="transition-transform duration-300 group-hover/spot:translate-x-1" />
+                    </Link>
+                  </div>
+                </SpotlightCard>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
-      
+
       <section
         id="cybersecurity"
-        className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-brown-900 to-brown-800 text-white scroll-mt-24"
+        className="relative isolate scroll-mt-24 overflow-hidden bg-brown-950 px-4 py-24 text-white sm:px-6 md:py-32 lg:px-8"
       >
+        <div className="absolute inset-0 -z-10 bg-grid-dark mask-fade-radial" aria-hidden="true" />
+        <div
+          className="absolute left-1/2 top-0 -z-10 h-[380px] w-[780px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-yellow-500/20 blur-[120px]"
+          aria-hidden="true"
+        />
         <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto mb-12"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-500/10 text-yellow-500 font-semibold text-sm mb-6">
-              <ShieldCheck size={16} />
-              Cybersecurity
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-6">Defend What You Build</h2>
-            <p className="text-xl text-gray-300">
-              Comprehensive cybersecurity services to identify risks, defend against
-              threats, and respond decisively when it matters most.
-            </p>
-          </motion.div>
+          <SectionHeading
+            dark
+            centered
+            eyebrow="Cybersecurity"
+            title={
+              <>
+                Defend what <span className="accent text-yellow-400">you build</span>
+              </>
+            }
+            subtitle="Comprehensive cybersecurity services to identify risks, defend against threats, and respond decisively when it matters most."
+          />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-6">
             {cybersecurityServices.map((service, index) => (
               <motion.div
                 key={service.id}
                 id={service.id}
-                className="scroll-mt-24"
+                className={`scroll-mt-24 ${index < 2 ? 'lg:col-span-3' : 'lg:col-span-2'}`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.06, duration: 0.5 }}
               >
-                <div className="h-full flex flex-col p-8 rounded-lg bg-brown-800/60 border border-brown-700 hover:border-yellow-500/60 transition-colors">
-                  <div className="w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-500 mb-6">
-                    <service.icon size={24} />
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-4">{service.title}</h3>
-                  <p className="text-gray-300 flex-grow">{service.description}</p>
-                </div>
+                <SpotlightCard dark className="flex h-full flex-col p-8">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-yellow-400">
+                    <service.icon size={22} />
+                  </span>
+                  <h3 className="mt-7 text-2xl text-white">{service.title}</h3>
+                  <p className="mt-3 flex-grow leading-relaxed text-white/55">{service.description}</p>
+                </SpotlightCard>
               </motion.div>
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-12">
+          <div className="mt-12 flex flex-col justify-center gap-3 sm:flex-row">
             <Button to="/quote" size="lg">
               Get a Quote
+              <ArrowRight size={18} />
             </Button>
             <Button to="/contact" size="lg" variant="outlineOnDark">
               Talk to a Security Expert
@@ -248,26 +257,15 @@ const Services = () => {
         </div>
       </section>
 
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="container mx-auto">
-          <div className="bg-white rounded-lg shadow-lg p-8 md:p-12 lg:flex lg:items-center lg:justify-between">
-            <div className="lg:max-w-3xl">
-              <h2 className="text-3xl font-bold text-brown-900 mb-4">Ready to transform your business?</h2>
-              <p className="text-lg text-gray-600 mb-6 lg:mb-0">
-                Contact us today to discuss how our services can help you achieve your technology goals.
-              </p>
-            </div>
-            <div className="flex-shrink-0 flex flex-col sm:flex-row gap-3">
-              <Button to="/quote" size="lg">
-                Get a Quote
-              </Button>
-              <Button to="/contact" size="lg" variant="outline">
-                Get in Touch
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTASection
+        title={
+          <>
+            Ready to transform <span className="accent text-yellow-400">your business?</span>
+          </>
+        }
+        subtitle="Contact us today to discuss how our services can help you achieve your technology goals."
+        secondary={{ label: 'Get in Touch', to: '/contact' }}
+      />
     </>
   );
 };

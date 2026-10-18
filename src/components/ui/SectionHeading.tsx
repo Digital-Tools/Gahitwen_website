@@ -1,37 +1,45 @@
 import { ReactNode } from 'react';
+import Eyebrow from './Eyebrow';
 
 type SectionHeadingProps = {
-  title: string;
+  title: ReactNode;
   subtitle?: string | ReactNode;
   centered?: boolean;
   className?: string;
   eyebrow?: string;
+  dark?: boolean;
 };
 
-const SectionHeading = ({ 
-  title, 
-  subtitle, 
+const SectionHeading = ({
+  title,
+  subtitle,
   centered = false,
   className = '',
   eyebrow,
+  dark = false,
 }: SectionHeadingProps) => {
-  const alignment = centered ? 'text-center' : 'text-left';
-  const lineAlignment = centered ? 'mx-auto' : '';
-  
+  const alignment = centered ? 'text-center items-center' : 'text-left items-start';
+
   return (
-    <div className={`mb-10 ${alignment} ${className}`}>
+    <div className={`mb-12 md:mb-16 flex flex-col ${alignment} ${className}`}>
       {eyebrow && (
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-yellow-600 mb-3">
+        <Eyebrow dark={dark} className="mb-5">
           {eyebrow}
-        </p>
+        </Eyebrow>
       )}
-      <h2 className="text-3xl sm:text-4xl font-bold text-brown-900 mb-3">{title}</h2>
-      <div
-        className={`h-0.5 w-12 bg-yellow-500 mb-4 ${lineAlignment}`}
-        aria-hidden="true"
-      />
+      <h2
+        className={`text-3xl sm:text-4xl md:text-5xl leading-[1.05] max-w-3xl ${
+          dark ? 'text-white' : 'text-brown-950'
+        }`}
+      >
+        {title}
+      </h2>
       {subtitle && (
-        <div className={`text-lg text-gray-600 max-w-3xl ${centered ? 'mx-auto' : ''}`}>
+        <div
+          className={`mt-5 text-base sm:text-lg leading-relaxed max-w-2xl ${
+            dark ? 'text-white/60' : 'text-brown-700/80'
+          }`}
+        >
           {subtitle}
         </div>
       )}
