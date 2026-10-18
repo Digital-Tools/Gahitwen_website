@@ -15,12 +15,8 @@ const fadeUp = (delay: number) => ({
 const Hero = () => {
   return (
     <section className="relative overflow-hidden px-4 pt-32 sm:px-6 md:pt-40 lg:px-8">
-      {/* Backdrop: engineering grid + warm glow */}
+      {/* Backdrop: engineering grid */}
       <div className="absolute inset-0 bg-grid mask-fade-radial" aria-hidden="true" />
-      <div
-        className="absolute left-1/2 top-0 h-[520px] w-[1000px] -translate-x-1/2 -translate-y-1/3 rounded-full bg-yellow-400/30 blur-[130px]"
-        aria-hidden="true"
-      />
 
       <div className="container relative mx-auto">
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
@@ -32,7 +28,9 @@ const Hero = () => {
               <span className="rounded-full bg-brown-950 px-2.5 py-0.5 font-mono text-[0.6875rem] font-medium uppercase tracking-wider text-yellow-400">
                 New
               </span>
-              DataOps Drive<span className="hidden sm:inline"> — private AI over your archive</span>
+              <span>
+                DataOps Drive<span className="hidden sm:inline"> — private AI over your archive</span>
+              </span>
               <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
             </Link>
           </motion.div>
@@ -73,10 +71,6 @@ const Hero = () => {
           style={{ transformPerspective: 1400 }}
           className="relative mx-auto mt-16 max-w-5xl md:mt-20"
         >
-          <div
-            className="absolute -inset-x-10 -bottom-10 top-10 rounded-[3rem] bg-yellow-500/20 blur-3xl"
-            aria-hidden="true"
-          />
           <div className="relative rounded-[1.75rem] border border-brown-900/10 bg-white/60 p-2 shadow-lift backdrop-blur-xl">
             <div className="overflow-hidden rounded-[1.25rem] border border-brown-900/10 bg-white">
               {/* Window chrome */}

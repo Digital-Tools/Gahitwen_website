@@ -56,10 +56,6 @@ const ContactInfo = () => {
   return (
     <div className="relative isolate overflow-hidden rounded-3xl bg-brown-950 p-8 text-white md:p-10">
       <div className="absolute inset-0 -z-10 bg-grid-dark mask-fade-b" aria-hidden="true" />
-      <div
-        className="absolute -right-24 -top-24 -z-10 h-64 w-64 rounded-full bg-yellow-500/25 blur-[90px]"
-        aria-hidden="true"
-      />
 
       <h2 className="text-2xl text-white">Contact information</h2>
       <p className="mt-2 text-white/55">Prefer email or a call? Reach us directly.</p>

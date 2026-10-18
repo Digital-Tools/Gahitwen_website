@@ -137,10 +137,6 @@ const ProductsOverview = () => {
           {dataops && (
             <motion.div {...reveal(5)} className="md:col-span-2 lg:col-span-6">
               <SpotlightCard dark className="!bg-brown-950 grid grid-cols-1 gap-10 p-7 sm:p-10 lg:grid-cols-2 lg:items-center">
-                <div
-                  className="absolute -right-24 -top-24 -z-20 h-72 w-72 rounded-full bg-yellow-500/25 blur-[90px]"
-                  aria-hidden="true"
-                />
                 <div>
                   <span className="inline-flex items-center gap-2 rounded-full border border-white/15 px-2.5 py-1 font-mono text-[0.6875rem] uppercase tracking-wider text-yellow-400">
                     <dataops.icon size={13} />

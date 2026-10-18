@@ -61,10 +61,6 @@ const Systems = () => {
         className="relative isolate scroll-mt-24 overflow-hidden bg-brown-950 px-4 py-24 sm:px-6 md:py-32 lg:px-8"
       >
         <div className="absolute inset-0 -z-10 bg-grid-dark mask-fade-radial" aria-hidden="true" />
-        <div
-          className="absolute left-1/2 top-0 -z-10 h-[360px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-yellow-500/20 blur-[120px]"
-          aria-hidden="true"
-        />
         <div className="container mx-auto">
           <SectionHeading
             dark

@@ -17,7 +17,7 @@ type CTASectionProps = {
   footnote?: ReactNode;
 };
 
-// Closing call-to-action: dark panel with a warm glow, used at the end of pages.
+// Closing call-to-action: dark panel used at the end of pages.
 const CTASection = ({
   title,
   subtitle,
@@ -36,10 +36,6 @@ const CTASection = ({
           className="relative isolate overflow-hidden rounded-[2rem] bg-brown-950 px-6 py-16 text-center text-white sm:px-12 md:py-24"
         >
           <div className="absolute inset-0 -z-10 bg-grid-dark mask-fade-b" aria-hidden="true" />
-          <div
-            className="absolute -bottom-40 left-1/2 -z-10 h-[360px] w-[720px] -translate-x-1/2 rounded-full bg-yellow-500/35 blur-[110px]"
-            aria-hidden="true"
-          />
           <div
             className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-yellow-500/70 to-transparent"
             aria-hidden="true"

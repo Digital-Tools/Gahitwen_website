@@ -10,17 +10,13 @@ type PageHeroProps = {
   centered?: boolean;
 };
 
-// Shared hero for inner pages: light grid backdrop with a warm glow.
+// Shared hero for inner pages: light grid backdrop.
 const PageHero = ({ eyebrow, title, subtitle, children, centered = true }: PageHeroProps) => {
   const alignment = centered ? 'text-center items-center mx-auto' : 'text-left items-start';
 
   return (
     <section className="relative overflow-hidden px-4 pt-36 pb-16 sm:px-6 md:pt-44 md:pb-24 lg:px-8">
       <div className="absolute inset-0 bg-grid mask-fade-radial" aria-hidden="true" />
-      <div
-        className="absolute left-1/2 top-0 h-[420px] w-[820px] -translate-x-1/2 -translate-y-1/3 rounded-full bg-yellow-400/25 blur-[120px]"
-        aria-hidden="true"
-      />
 
       <div className="container relative mx-auto">
         <motion.div

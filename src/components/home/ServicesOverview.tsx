@@ -49,10 +49,6 @@ const ServicesOverview = () => {
   return (
     <section className="relative isolate overflow-hidden bg-brown-950 px-4 py-24 text-white sm:px-6 md:py-32 lg:px-8">
       <div className="absolute inset-0 -z-10 bg-grid-dark mask-fade-radial" aria-hidden="true" />
-      <div
-        className="absolute -left-40 top-1/3 -z-10 h-[420px] w-[420px] rounded-full bg-yellow-500/15 blur-[120px]"
-        aria-hidden="true"
-      />
 
       <div className="container mx-auto grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">

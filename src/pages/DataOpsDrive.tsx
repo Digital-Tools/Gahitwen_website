@@ -252,10 +252,6 @@ const DataOpsDrive = () => {
       {/* Hero */}
       <section className="relative overflow-hidden px-4 pt-36 pb-20 sm:px-6 md:pt-44 md:pb-28 lg:px-8">
         <div className="absolute inset-0 bg-grid mask-fade-radial" aria-hidden="true" />
-        <div
-          className="absolute left-1/2 top-0 h-[460px] w-[900px] -translate-x-1/2 -translate-y-1/3 rounded-full bg-yellow-400/25 blur-[120px]"
-          aria-hidden="true"
-        />
         <div className="container relative mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -429,10 +425,6 @@ const DataOpsDrive = () => {
       {/* Proof */}
       <section className="relative isolate overflow-hidden py-24 md:py-28 px-4 sm:px-6 lg:px-8 bg-brown-950 text-white">
         <div className="absolute inset-0 -z-10 bg-grid-dark mask-fade-radial" aria-hidden="true" />
-        <div
-          className="absolute left-1/2 top-0 -z-10 h-[360px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-yellow-500/20 blur-[120px]"
-          aria-hidden="true"
-        />
         <div className="container mx-auto max-w-5xl">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <Eyebrow dark className="mb-5">
