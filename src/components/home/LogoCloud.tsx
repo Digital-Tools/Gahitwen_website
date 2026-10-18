@@ -9,7 +9,7 @@ const clients = clientSystems
 
 const stats = [
   { value: 5, suffix: "", label: "Live products in production" },
-  { value: 54, suffix: "+", label: "Countries on our logistics network" },
+  { value: 3, suffix: "", label: "Countries with active logistics customers" },
   { value: 10, suffix: "", label: "Client & capability systems shipped" },
   { value: 63000, prefix: "~", suffix: "", label: "Documents indexed by DataOps Drive" },
 ];

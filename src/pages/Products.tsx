@@ -11,12 +11,12 @@ const products = [
   {
     id: "gahitwen-logistics",
     title: "Gahitwen Logistics",
-    capability: "Real-time marketplace + trust & payments at continental scale",
+    capability: "Real-time marketplace + trust & payments across borders",
     tagline: "Move Anything, Anytime.",
     summary:
-      "A two-sided marketplace matching cargo owners with truckers across 7 vehicle classes and 54+ countries — with escrow payments, real-time GPS tracking, and KYC-style driver verification.",
+      "A two-sided marketplace matching cargo owners with truckers across 7 vehicle classes — live in Cameroon, Chad and Tanzania, with escrow payments, real-time GPS tracking, and KYC-style driver verification.",
     pitch:
-      "Freight matching looks simple until you have to make it safe. Gahitwen Logistics is a two-sided marketplace connecting cargo owners with truckers — across 7 vehicle classes, from a 0.2-tonne pikipiki to a 40-tonne semi-trailer — seeded across 54+ countries. Every driver and fleet owner goes through an admin-verification workflow before they can touch the platform. Every payment sits in escrow until delivery is confirmed. Every shipment is tracked in real time, end to end.",
+      "Freight matching looks simple until you have to make it safe. Gahitwen Logistics is a two-sided marketplace connecting cargo owners with truckers — across 7 vehicle classes, from a 0.2-tonne pikipiki to a 40-tonne semi-trailer — with active customers in Cameroon, Chad and Tanzania. Every driver and fleet owner goes through an admin-verification workflow before they can touch the platform. Every payment sits in escrow until delivery is confirmed. Every shipment is tracked in real time, end to end.",
     provesWeCanBuild: [
       "Two-sided marketplace matching logic, not a form with a database behind it",
       "Trust & verification pipelines (KYC-style approval workflows) for real-world operators",

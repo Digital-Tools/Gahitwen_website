@@ -18,7 +18,7 @@ export const productSummaries: ProductSummary[] = [
     id: "gahitwen-logistics",
     name: "Gahitwen Logistics",
     description:
-      "Two-sided marketplace connecting cargo owners & truckers across 54+ countries.",
+      "Two-sided marketplace connecting cargo owners & truckers in Cameroon, Chad and Tanzania.",
     builtFor: "Marketplaces at scale",
     platforms: "iOS · Android",
     icon: Truck,
