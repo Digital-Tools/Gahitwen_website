@@ -26,11 +26,7 @@ import {
   getScope,
   type Estimate,
 } from '../../src/lib/quote';
-
-// Read env without requiring @types/node in the editor.
-const env: Record<string, string | undefined> =
-  (globalThis as { process?: { env?: Record<string, string | undefined> } })
-    .process?.env ?? {};
+import { env, isTooFast, verifyTurnstile } from '../lib/verify';
 
 interface ContactPayload {
   name?: string;
@@ -69,64 +65,6 @@ const makeTicketRef = (): string => {
   const ymd = now.toISOString().slice(0, 10).replace(/-/g, '');
   const rand = Math.random().toString(36).slice(2, 6).toUpperCase();
   return `GHT-${ymd}-${rand}`;
-};
-
-const isProduction =
-  env.CONTEXT === 'production' || env.NODE_ENV === 'production';
-
-const verifyTurnstile = async (token: string | undefined): Promise<boolean> => {
-  const secret = env.TURNSTILE_SECRET_KEY;
-  if (!secret) {
-    if (isProduction) {
-      console.error(
-        '[submit-quote] TURNSTILE_SECRET_KEY not set in production — rejecting submission.'
-      );
-      return false;
-    }
-    console.warn('[submit-quote] TURNSTILE_SECRET_KEY not set — skipping verification.');
-    return true;
-  }
-  if (!token) return false;
-
-  try {
-    const formData = new URLSearchParams();
-    formData.append('secret', secret);
-    formData.append('response', token);
-
-    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST',
-      body: formData,
-    });
-    const data = (await res.json()) as {
-      success?: boolean;
-      hostname?: string;
-      'error-codes'?: string[];
-    };
-    if (!data.success) {
-      console.warn('[submit-quote] Turnstile rejected:', data['error-codes']);
-      return false;
-    }
-    if (
-      data.hostname &&
-      !data.hostname.endsWith('gahitwen.com') &&
-      data.hostname !== 'localhost'
-    ) {
-      console.warn('[submit-quote] Turnstile hostname mismatch:', data.hostname);
-      return false;
-    }
-    return true;
-  } catch (err) {
-    console.error('[submit-quote] Turnstile verification failed:', err);
-    return false;
-  }
-};
-
-const MIN_FORM_SECONDS = 4;
-
-const isTooFast = (formStartedAt: number | undefined): boolean => {
-  if (!formStartedAt || !Number.isFinite(formStartedAt)) return true;
-  const elapsedMs = Date.now() - formStartedAt;
-  return elapsedMs < MIN_FORM_SECONDS * 1000;
 };
 
 const URL_RE = /https?:\/\/|www\./gi;
@@ -730,7 +668,7 @@ export const handler = async (event: {
     return json(403, { error: 'Verification failed. Please try again.' });
   }
 
-  const human = await verifyTurnstile(payload.turnstileToken);
+  const human = await verifyTurnstile(payload.turnstileToken, 'submit-quote');
   if (!human) {
     return json(403, { error: 'Verification failed. Please try again.' });
   }

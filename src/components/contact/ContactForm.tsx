@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import { Send, Loader2, ShieldAlert } from "lucide-react";
 import TurnstileWidget from "../ui/TurnstileWidget";
 import Button from "../ui/Button";
-import emailjs from "emailjs-com";
 import { trackEvent } from "../../lib/analytics";
 
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY;
@@ -36,6 +35,8 @@ const ContactForm = () => {
   const [submitError, setSubmitError] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
   const [turnstileKey, setTurnstileKey] = useState(0);
+  const [companyWebsite, setCompanyWebsite] = useState("");
+  const [formStartedAt] = useState(() => Date.now());
 
   const onVerify = useCallback((token: string) => {
     setTurnstileToken(token);
@@ -53,7 +54,7 @@ const ContactForm = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError("");
@@ -64,45 +65,51 @@ const ContactForm = () => {
       return;
     }
 
-    emailjs
-      .send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-          application: "The Gahitwen LLC",
-          "cf-turnstile-response": turnstileToken,
-        },
-        import.meta.env.VITE_EMAILJS_USER_ID,
-      )
-      .then(() => {
-        setIsSubmitting(false);
-        setSubmitSuccess(true);
-        if (formData.subject === "DataOps Drive pilot") {
-          trackEvent("pilot_submitted");
-        }
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        });
-
-        // Reset success message after 5 seconds
-        setTimeout(() => setSubmitSuccess(false), 5000);
-
-        // Reset Turnstile widget
-        setTurnstileToken("");
-        setTurnstileKey((prev) => prev + 1);
-      })
-      .catch((error: unknown) => {
-        setIsSubmitting(false);
-        setSubmitError("Failed to send message. Please try again later.");
-        console.error("EmailJS Error:", error);
+    try {
+      // Sent via our function so the Turnstile token is verified server-side.
+      const res = await fetch("/api/submit-contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          turnstileToken,
+          formStartedAt,
+          companyWebsite,
+        }),
       });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(
+          data?.error || "Failed to send message. Please try again later.",
+        );
+      }
+
+      setSubmitSuccess(true);
+      if (formData.subject === "DataOps Drive pilot") {
+        trackEvent("pilot_submitted");
+      }
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+
+      // Reset success message after 5 seconds
+      setTimeout(() => setSubmitSuccess(false), 5000);
+    } catch (error: unknown) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Failed to send message. Please try again later.",
+      );
+      console.error("Contact form error:", error);
+    } finally {
+      setIsSubmitting(false);
+      // Tokens are single-use: reset Turnstile after every attempt
+      setTurnstileToken("");
+      setTurnstileKey((prev) => prev + 1);
+    }
   };
 
   return (
@@ -183,6 +190,23 @@ const ContactForm = () => {
           rows={6}
           className="block w-full rounded-xl border border-brown-900/15 bg-white px-4 py-3 text-brown-950 placeholder:text-brown-400 transition-shadow focus:border-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-500/20"
         ></textarea>
+      </div>
+
+      {/* Honeypot — hidden from humans, often filled by bots */}
+      <div
+        className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        <label htmlFor="companyWebsite">Company website</label>
+        <input
+          id="companyWebsite"
+          name="companyWebsite"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={companyWebsite}
+          onChange={(e) => setCompanyWebsite(e.target.value)}
+        />
       </div>
 
       {TURNSTILE_SITE_KEY ? (

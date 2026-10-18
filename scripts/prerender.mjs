@@ -12,9 +12,13 @@ const distDir = resolve(__dirname, '..', 'dist');
 // (the catch-all 404 route is intentionally excluded).
 const routes = SITE_ROUTES.map((r) => r.path);
 
+// Write /contact as dist/contact.html, not dist/contact/index.html: Netlify
+// serves a folder index only at the trailing-slash URL, so the folder layout
+// 301-redirects /contact -> /contact/ while canonical tags and the sitemap use
+// /contact. With .html files, Netlify serves /contact directly.
 const outFileForRoute = (route) => {
   if (route === '/') return resolve(distDir, 'index.html');
-  return resolve(distDir, `.${route}`, 'index.html');
+  return resolve(distDir, `.${route}.html`);
 };
 
 const run = async () => {
