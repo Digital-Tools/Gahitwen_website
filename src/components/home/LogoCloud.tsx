@@ -1,17 +1,21 @@
 import Marquee from "../ui/Marquee";
 import NumberTicker from "../ui/NumberTicker";
-import { clientSystems } from "../../lib/systems";
+import { clientSystems, capabilitySystems } from "../../lib/systems";
+import { productSummaries } from "../../lib/products";
 
 // One entry per client, in first-seen order.
 const clients = clientSystems
   .map((system) => system.client)
   .filter((client, index, all) => all.findIndex((c) => c.name === client.name) === index);
 
+const builtForOthers = clientSystems.length + capabilitySystems.length;
+
+// Counts come from the catalogues so they stay in sync with the site.
 const stats = [
-  { value: 5, suffix: "", label: "Live products in production" },
-  { value: 3, suffix: "", label: "Countries with active logistics customers" },
-  { value: 10, suffix: "", label: "Client & capability systems shipped" },
-  { value: 63000, prefix: "~", suffix: "", label: "Documents indexed by DataOps Drive" },
+  { value: productSummaries.length + builtForOthers, label: "Products & systems built in total" },
+  { value: productSummaries.length, label: "In-house products of our own" },
+  { value: builtForOthers, label: "Client & capability systems shipped" },
+  { value: 63000, prefix: "~", label: "Documents indexed by DataOps Drive" },
 ];
 
 const LogoCloud = () => {
@@ -54,7 +58,7 @@ const LogoCloud = () => {
             >
               <dt className="mt-2 text-sm leading-snug text-brown-600">{stat.label}</dt>
               <dd className="text-3xl font-semibold tracking-[-0.04em] text-brown-950 sm:text-5xl">
-                <NumberTicker value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
+                <NumberTicker value={stat.value} prefix={stat.prefix} />
               </dd>
             </div>
           ))}
