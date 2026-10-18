@@ -1,10 +1,13 @@
 import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import Seo from '../components/ui/Seo';
 import PageHero from '../components/ui/PageHero';
 import ContactForm from '../components/contact/ContactForm';
 import ContactInfo from '../components/contact/ContactInfo';
 
 const Contact = () => {
+  const { search } = useLocation();
+
   return (
     <>
       <Seo
@@ -33,7 +36,8 @@ const Contact = () => {
           >
             <h2 className="text-2xl text-brown-950">Send us a message</h2>
             <p className="mt-2 mb-8 text-brown-600">Tell us a little about what you need.</p>
-            <ContactForm />
+            {/* Remount when ?subject= changes so the preset applies. */}
+            <ContactForm key={search} />
           </motion.div>
 
           <motion.div

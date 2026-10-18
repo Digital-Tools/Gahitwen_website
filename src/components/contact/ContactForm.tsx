@@ -8,12 +8,26 @@ import { trackEvent } from "../../lib/analytics";
 
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY;
 
+// Links elsewhere on the site preselect one of these via ?subject=.
+const SUBJECTS = [
+  "General Inquiry",
+  "DataOps Drive pilot",
+  "Product Information",
+  "Service Request",
+  "Security Consultation",
+  "Partnership Opportunity",
+  "Careers",
+  "Other",
+];
+
 const ContactForm = () => {
   const [searchParams] = useSearchParams();
+  const presetSubject = searchParams.get("subject") ?? "";
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    subject: searchParams.get("subject") ?? "",
+    // Ignore unknown values so the select never holds a value it can't show.
+    subject: SUBJECTS.includes(presetSubject) ? presetSubject : "",
     message: "",
   });
 
@@ -145,14 +159,11 @@ const ContactForm = () => {
           className="block w-full rounded-xl border border-brown-900/15 bg-white px-4 py-3 text-brown-950 placeholder:text-brown-400 transition-shadow focus:border-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-500/20"
         >
           <option value="">Select a subject</option>
-          <option value="General Inquiry">General Inquiry</option>
-          <option value="DataOps Drive pilot">DataOps Drive pilot</option>
-          <option value="Product Information">Product Information</option>
-          <option value="Service Request">Service Request</option>
-          <option value="Partnership Opportunity">
-            Partnership Opportunity
-          </option>
-          <option value="Other">Other</option>
+          {SUBJECTS.map((subject) => (
+            <option key={subject} value={subject}>
+              {subject}
+            </option>
+          ))}
         </select>
       </div>
 

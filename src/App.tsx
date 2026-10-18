@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
+import ScrollManager from './components/layout/ScrollManager';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import DataOpsDrive from './pages/DataOpsDrive';
@@ -16,6 +17,7 @@ import GoogleAnalytics from './components/analytics/GoogleAnalytics';
 function App() {
   return (
     <Router>
+      <ScrollManager />
       <GoogleAnalytics />
       <Layout>
         <Routes>

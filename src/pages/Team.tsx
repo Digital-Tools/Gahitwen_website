@@ -102,7 +102,7 @@ const Team = () => {
           </>
         }
         subtitle="We're always looking for talented individuals to join our growing team. If you're passionate about technology and innovation, we'd love to hear from you."
-        primary={{ label: 'View Open Positions', to: '/contact' }}
+        primary={{ label: 'View Open Positions', to: '/contact?subject=Careers' }}
       />
     </>
   );

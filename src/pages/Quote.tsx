@@ -1,9 +1,12 @@
+import { useLocation } from 'react-router-dom';
 import Seo from '../components/ui/Seo';
 import PageHero from '../components/ui/PageHero';
 import QuoteForm from '../components/quote/QuoteForm';
 import { organizationSchema } from '../lib/structuredData';
 
 const Quote = () => {
+  const { search } = useLocation();
+
   return (
     <>
       <Seo
@@ -33,7 +36,8 @@ const Quote = () => {
 
       <section className="px-4 pb-24 sm:px-6 md:pb-32 lg:px-8">
         <div className="container mx-auto max-w-6xl">
-          <QuoteForm />
+          {/* Remount when ?service= changes so the preset applies. */}
+          <QuoteForm key={search} />
         </div>
       </section>
     </>

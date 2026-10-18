@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Seo from '../components/ui/Seo';
 import { motion } from 'framer-motion';
 import {
@@ -103,16 +102,6 @@ const cybersecurityServices = [
 const servicesSchema = buildServicesSchema([...services, ...cybersecurityServices]);
 
 const Services = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    if (!location.hash) return;
-    const id = location.hash.slice(1);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }, [location]);
 
   return (
     <>
@@ -236,17 +225,26 @@ const Services = () => {
                   </span>
                   <h3 className="mt-7 text-2xl text-white">{service.title}</h3>
                   <p className="mt-3 flex-grow leading-relaxed text-white/55">{service.description}</p>
+                  <div className="mt-6 border-t border-white/10 pt-5">
+                    <Link
+                      to={`/quote?service=${service.id}`}
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-white"
+                    >
+                      Get a quote
+                      <ArrowRight size={15} className="transition-transform duration-300 group-hover/spot:translate-x-1" />
+                    </Link>
+                  </div>
                 </SpotlightCard>
               </motion.div>
             ))}
           </div>
 
           <div className="mt-12 flex flex-col justify-center gap-3 sm:flex-row">
-            <Button to="/quote" size="lg">
+            <Button to={`/quote?service=${cybersecurityServices[0].id}`} size="lg">
               Get a Quote
               <ArrowRight size={18} />
             </Button>
-            <Button to="/contact" size="lg" variant="outlineOnDark">
+            <Button to="/contact?subject=Security%20Consultation" size="lg" variant="outlineOnDark">
               Talk to a Security Expert
             </Button>
           </div>

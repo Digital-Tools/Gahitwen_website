@@ -29,7 +29,7 @@ const stages = [
   {
     title: "Act",
     caption:
-      "Agents research, draft, review and act across your systems. This is the Symbiote Agent Harness, priced separately.",
+      "Agents research, draft, review and act across your systems. This is the Agent Harness, priced separately.",
     icon: Sparkles,
   },
 ];

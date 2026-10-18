@@ -145,7 +145,7 @@ const pricing: PricingOption[] = [
   },
   {
     id: "harness",
-    name: "Symbiote Agent Harness",
+    name: "Agent Harness",
     price: "TZS 39,000,000",
     unit: "one-off add-on",
     usd: "~USD 14,440",
