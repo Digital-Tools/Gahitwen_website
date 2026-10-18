@@ -1,20 +1,14 @@
 import Marquee from "../ui/Marquee";
 import NumberTicker from "../ui/NumberTicker";
-import { clientSystems, capabilitySystems } from "../../lib/systems";
-import { productSummaries } from "../../lib/products";
+import { clientSystems } from "../../lib/systems";
 
 // One entry per client, in first-seen order.
 const clients = clientSystems
   .map((system) => system.client)
   .filter((client, index, all) => all.findIndex((c) => c.name === client.name) === index);
 
-const builtForOthers = clientSystems.length + capabilitySystems.length;
-
-// Counts come from the catalogues so they stay in sync with the site.
 const stats = [
-  { value: productSummaries.length + builtForOthers, label: "Products & systems built in total" },
-  { value: productSummaries.length, label: "In-house products of our own" },
-  { value: builtForOthers, label: "Client & capability systems shipped" },
+  { value: 50, suffix: "+", label: "Products & systems shipped" },
   { value: 63000, prefix: "~", label: "Documents indexed by DataOps Drive" },
 ];
 
@@ -48,17 +42,15 @@ const LogoCloud = () => {
           ))}
         </Marquee>
 
-        <dl className="mt-20 grid grid-cols-2 overflow-hidden rounded-3xl border border-brown-900/10 bg-white/60 lg:grid-cols-4">
+        <dl className="mx-auto mt-20 grid max-w-4xl grid-cols-2 overflow-hidden rounded-3xl border border-brown-900/10 bg-white/60">
           {stats.map((stat, index) => (
             <div
               key={stat.label}
-              className={`flex flex-col-reverse p-5 sm:p-8 ${index % 2 === 1 ? "border-l border-brown-900/10" : ""} ${
-                index > 1 ? "border-t border-brown-900/10 lg:border-t-0" : ""
-              } ${index === 2 ? "lg:border-l" : ""}`}
+              className={`flex flex-col-reverse p-5 sm:p-8 ${index > 0 ? "border-l border-brown-900/10" : ""}`}
             >
               <dt className="mt-2 text-sm leading-snug text-brown-600">{stat.label}</dt>
               <dd className="text-3xl font-semibold tracking-[-0.04em] text-brown-950 sm:text-5xl">
-                <NumberTicker value={stat.value} prefix={stat.prefix} />
+                <NumberTicker value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
               </dd>
             </div>
           ))}
